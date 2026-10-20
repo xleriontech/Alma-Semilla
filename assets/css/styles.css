@@ -602,8 +602,13 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   border: 1px solid rgba(255, 255, 255, .12);
   border-radius: var(--r-lg); overflow: hidden;
   display: grid; grid-template-columns: 1fr 320px;
+  /* align-items: start evita que la fila estire la columna del lienzo
+     cuando el panel de detalle crece al seleccionar un nodo */
+  align-items: start;
+  /* referencia de posicionamiento para la ficha flotante del nodo */
+  position: relative;
 }
-.tejido__lienzo { position: relative; min-height: 460px; }
+.tejido__lienzo { position: relative; height: 520px; }
 .tejido__lienzo canvas { width: 100%; height: 100%; display: block; position: absolute; inset: 0; }
 .tejido__pista {
   position: absolute; left: 20px; bottom: 18px; z-index: 2;
@@ -615,6 +620,9 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   border-left: 1px solid rgba(255, 255, 255, .1);
   padding: 28px 24px;
   display: flex; flex-direction: column; gap: 18px;
+  /* La barra lateral se estira a toda la altura de la fila, aunque su
+     contenido sea corto: si no, el fondo oscuro cortaría en seco. */
+  align-self: stretch;
 }
 .tejido__filtros h3 { font-size: 15px; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: var(--fuente-texto); font-weight: 800; }
 .filtro {
@@ -628,9 +636,31 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
 .filtro input { accent-color: var(--esmeralda); width: 16px; height: 16px; }
 .filtro__cont { margin-left: auto; font-family: var(--fuente-mono); font-size: 12px; color: rgba(250, 246, 238, .55); }
 .tejido__detalle {
-  margin-top: auto; padding: 16px; border-radius: var(--r-sm);
-  background: rgba(0, 0, 0, .3); border: 1px solid rgba(255, 255, 255, .1);
-  font-size: 12.5px; color: rgba(250, 246, 238, .7); line-height: 1.55;
+  /* Flota sobre el grafo: el lienzo mantiene siempre su altura y la
+     ficha no obliga a estirar la fila del grid. */
+  position: absolute; top: 20px; left: 20px; z-index: 4;
+  width: min(330px, calc(100% - 380px));
+  max-height: 460px; overflow-y: auto;
+  padding: 20px 22px; border-radius: var(--r);
+  background: rgba(5, 18, 13, .93);
+  border: 1px solid rgba(255, 255, 255, .15);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 12.5px; color: rgba(250, 246, 238, .72); line-height: 1.55;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(250, 246, 238, .22) transparent;
+  /* La ficha es un simple lector de datos: nunca debe interceptar
+     el clic sobre los nodos que hay debajo. */
+  pointer-events: none;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s cubic-bezier(.2, .7, .2, 1);
+}
+.tejido__detalle.tiene-dato { opacity: 1; transform: none; }
+.tejido__detalle::-webkit-scrollbar { width: 5px; }
+.tejido__detalle::-webkit-scrollbar-track { background: transparent; }
+.tejido__detalle::-webkit-scrollbar-thumb {
+  background: rgba(250, 246, 238, .22); border-radius: 999px;
 }
 .tejido__detalle strong { color: #fff; display: block; margin-bottom: 6px; font-size: 13.5px; }
 .tejido__detalle dl { display: grid; gap: 5px; }
@@ -1182,7 +1212,14 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   .esencia__grid { gap: 50px; }
   .tejido { grid-template-columns: 1fr; }
   .tejido__filtros { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .1); }
-  .tejido__lienzo { min-height: 400px; }
+  .tejido__lienzo { height: 440px; }
+  .tejido__detalle {
+    position: static; width: auto; max-height: none; overflow: visible;
+    background: rgba(0, 0, 0, .28); border: 1px solid rgba(255, 255, 255, .1);
+    box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+    margin-top: 4px;
+    pointer-events: auto;
+  }
   .demo { grid-template-columns: 1fr; }
   .demo__aside { order: -1; }
   .legal { grid-template-columns: 1fr; }
@@ -1256,6 +1293,7 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   .demo__form { padding: 16px; }
   .demo__aside { padding: 24px 18px; }
   .tejido__filtros { padding: 22px 18px; }
+  .tejido__lienzo { height: 340px; }
   .subir { right: 16px; bottom: 16px; }
   .msg { max-width: 96%; }
 }

@@ -33,20 +33,39 @@ document.documentElement.setAttribute('data-build', 'B8');
     };
   }
 
-  function prepararCanvas(canvas) {
+  function prepararCanvas(canvas, alRedimensionar) {
     const ctx = canvas.getContext('2d');
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let anchoPrevio = 0;
+    let altoPrevio = 0;
 
-    function redimensionar() {
+    // Recalcula el bitmap del canvas. Sin esto, si el contenedor cambia
+    // de alto (por ejemplo al crecer el panel de detalle), el CSS
+    // estira el dibujo y el grafo se deforma.
+    function medir() {
       const rect = canvas.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
+      if (!rect.width || !rect.height) return false;
+      if (Math.abs(rect.width - anchoPrevio) < 0.5 && Math.abs(rect.height - altoPrevio) < 0.5) return false;
+      anchoPrevio = rect.width;
+      altoPrevio = rect.height;
       canvas.width = Math.round(rect.width * dpr);
       canvas.height = Math.round(rect.height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      return true;
     }
 
-    redimensionar();
-    window.addEventListener('resize', redimensionar);
+    medir();
+    window.addEventListener('resize', function () {
+      if (medir() && alRedimensionar) alRedimensionar();
+    });
+
+    if (alRedimensionar && 'ResizeObserver' in window) {
+      const observador = new ResizeObserver(function () {
+        if (medir()) alRedimensionar();
+      });
+      observador.observe(canvas);
+    }
+
     return {
       ctx: ctx,
       ancho: function () { return canvas.getBoundingClientRect().width; },
@@ -189,7 +208,7 @@ document.documentElement.setAttribute('data-build', 'B8');
     const canvas = $('#tejido-hero');
     if (!canvas) return;
 
-    const lienzo = prepararCanvas(canvas);
+    const lienzo = prepararCanvas(canvas, function () { render(0); });
     const ctx = lienzo.ctx;
     const aleatorio = prng(20260915);
 
@@ -316,7 +335,7 @@ document.documentElement.setAttribute('data-build', 'B8');
     const canvas = $('#tejido-grafo');
     if (!canvas) return;
 
-    const lienzo = prepararCanvas(canvas);
+    const lienzo = prepararCanvas(canvas, function () { dibujar(0); });
     const ctx = lienzo.ctx;
     const panel = $('#nodo-detalle');
     const aleatorio = prng(730411);
@@ -398,6 +417,7 @@ document.documentElement.setAttribute('data-build', 'B8');
     function mostrarDetalle(reg) {
       if (!panel) return;
       const nivel = NIVELES[reg.nivel_acceso];
+      panel.classList.add('tiene-dato');
       panel.innerHTML =
         '<strong>' + reg.titulo + '</strong>' +
         '<dl>' +
@@ -414,6 +434,7 @@ document.documentElement.setAttribute('data-build', 'B8');
 
     function detalleVacio() {
       if (!panel) return;
+      panel.classList.remove('tiene-dato');
       panel.innerHTML = '<strong>Selecciona un nodo</strong><p>Haz clic sobre cualquier nodo ' +
         'del tejido para inspeccionar sus metadatos de gobernanza: comunidad, territorio, ' +
         'nivel de acceso y estado del CPLI.</p>';
