@@ -92,6 +92,44 @@ Si prefieres no usar build, en Cloudflare Pages pon:
 
 Funciona igual, pero `site_examples/` quedaría publicado también.
 
+### ⚠️ Importante: el repositorio es privado y la app de Cloudflare necesita acceso
+
+Cuando el repositorio pasa de público a privado, **GitHub revoca el acceso de las apps instaladas
+que solo lo tenían por ser público**. Si eso ocurre, los pushes dejan de disparar builds y el
+panel muestra el proyecto sin actividad.
+
+**Solución (una sola vez):**
+
+1. En GitHub, ve a *Settings → Applications → Installed GitHub Apps*.
+2. Busca **Cloudflare Workers and Pages** y pulsa *Configure*.
+3. En *Repository access* elige **Only select repositories** y marca `Alma-Semilla`
+   (o elige **All repositories**).
+4. Guarda los cambios.
+
+**Cómo comprobar si la app tiene acceso** (no necesitas permisos de administrador):
+
+```bash
+curl -H "Authorization: Bearer <tu_token>" \
+     -H "Accept: application/vnd.github+json" \
+     https://api.github.com/repos/xleriontech/Alma-Semilla/subscribers
+```
+
+Si la respuesta es `[]`, la app no tiene acceso y los builds no se dispararán.
+
+### Alternativa: despliegue desde el equipo
+
+Si prefieres no depender de la app de GitHub, puedes desplegar directamente:
+
+```bash
+npm install
+npm run deploy          # = node build.js && wrangler deploy
+```
+
+Necesita `wrangler login` (abre el navegador) o un token de API en la variable
+`CLOUDFLARE_API_TOKEN`.
+
+---
+
 ### Después de conectar
 
 - La URL provisional será `https://alma-semilla.pages.dev` (o `https://alma-semilla.<subdominio>.workers.dev`
