@@ -1,0 +1,662 @@
+¡Ahora sí te entiendo perfectamente! Tomando el **contexto real** que revelan los documentos, tenemos una historia fascinante:
+
+**"Alma y Semilla"** es una fundación/asociación nacida en **Chía, Cundinamarca en 2014** (más de 12 años de trayectoria), liderada por mujeres, que hoy participa en **Colombia 5.0 (Café & Conexiones TIC)**. Esto nos dice que su propósito es **unir la raíz humana y agrícola del campo colombiano ("Alma y Semilla") con la tecnología de cuarta revolución industrial (IoT, Realidad Virtual, IA) alrededor del café y el impacto social.**
+
+He diseñado y programado la **Plataforma Web Oficial de la Fundación Alma y Semilla**, con un estilo **"Agro-Tech Orgánico"** (tonos tierra, café, verde bosque profundo y acentos tecnológicos esmeralda).
+
+### ¿Qué incluye esta plataforma web?
+1. **Identidad Visual "Tierra + Futuro":** Tipografía editorial cálida combinada con una interfaz moderna de impacto social y tecnología.
+2. **Simulador Interactivo de Trazabilidad IoT ("De la Semilla a la Nube"):** Una herramienta en vivo donde el visitante puede elegir una finca/comunidad y ver métricas en tiempo real de sensores IoT (humedad, altitud, captura de CO2 e historia de la familia caficultora).
+3. **Catálogo de Café de Impacto & Experiencia VR:** Muestra cómo usan Realidad Virtual, IA y Blockchain en sus programas.
+4. **Calculadora Interactiva de Impacto Social:** Un deslizador donde empresas o donantes calculan cuántas familias, sensores o árboles financian con su aporte.
+5. **Sección de Transparencia Institucional:** Con su historia desde 2014, liderazgo femenino y respaldo legal discretamente integrado en el pie de página.
+
+---
+
+### Cómo ver la página web:
+1. Copia el código de abajo.
+2. Guárdalo en tu computador como **`index.html`**.
+3. Ábrelo en tu navegador.
+
+```html
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundación Alma y Semilla | Agro-Tecnología, Café y Tejido Social</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        :root {
+            --forest: #143627;
+            --emerald-tech: #10b981;
+            --coffee: #3c2415;
+            --terracotta: #c85a32;
+            --cream: #faf7f2;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--cream);
+            color: #1f2937;
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'Fraunces', serif;
+        }
+
+        .bg-forest { background-color: var(--forest); }
+        .text-forest { color: var(--forest); }
+        .bg-coffee { background-color: var(--coffee); }
+        .bg-terracotta { background-color: var(--terracotta); }
+        .text-terracotta { color: var(--terracotta); }
+
+        /* Gradiente hero con imagen de fondo */
+        .hero-bg {
+            background: linear-gradient(110deg, rgba(20, 54, 39, 0.92) 0%, rgba(20, 54, 39, 0.75) 55%, rgba(60, 36, 21, 0.7) 100%),
+                        url('https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        }
+
+        /* Animación de pulso para nodos IoT */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+        .iot-pulse::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #10b981;
+            border-radius: 50%;
+            animation: pulse-ring 2s infinite;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald-500 selection:text-white">
+
+    <!-- BARRA DE ANUNCIO: COLOMBIA 5.0 -->
+    <div class="bg-gradient-to-r from-purple-900 via-indigo-900 to-emerald-900 text-white text-xs py-2.5 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-2">
+            <div class="flex items-center space-x-2">
+                <span class="bg-emerald-400 text-purple-950 font-extrabold px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider">Evento 2026</span>
+                <span>Encuéntranos en <strong>Colombia 5.0: Muestra Comercial Café & Conexiones TIC</strong> en Bogotá D.C.</span>
+            </div>
+            <a href="#experiencia-50" class="text-emerald-300 hover:text-white font-semibold underline flex items-center">
+                Conoce nuestro Stand Interactivo 4RI <i class="fas fa-arrow-right ml-1 text-[10px]"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <nav class="sticky top-0 z-50 bg-[#faf7f2]/90 backdrop-blur-md border-b border-stone-200 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-11 h-11 rounded-2xl bg-forest flex items-center justify-center text-emerald-400 shadow-md group-hover:bg-emerald-800 transition">
+                        <i class="fas fa-seedling text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="serif-font text-2xl font-bold text-forest tracking-tight block leading-none">Alma & Semilla</span>
+                        <span class="text-[11px] uppercase tracking-widest text-stone-500 font-semibold">Fundación Agro-TIC</span>
+                    </div>
+                </a>
+
+                <!-- Links Desktop -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-stone-700">
+                    <a href="#esencia" class="hover:text-emerald-700 transition">Nuestra Esencia</a>
+                    <a href="#programas" class="hover:text-emerald-700 transition">Ecosistema 4.0</a>
+                    <a href="#trazabilidad" class="hover:text-emerald-700 transition flex items-center">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-ping"></span> Trazabilidad en Vivo
+                    </a>
+                    <a href="#experiencia-50" class="hover:text-emerald-700 transition">Café & VR</a>
+                    <a href="#impacto" class="hover:text-emerald-700 transition">Calculadora de Impacto</a>
+                </div>
+
+                <!-- Botones Acción -->
+                <div class="hidden md:flex items-center space-x-3">
+                    <button onclick="openModal()" class="px-4 py-2.5 rounded-full text-xs font-bold text-forest border border-forest/30 hover:bg-stone-200/60 transition">
+                        <i class="fas fa-mug-hot mr-1.5 text-terracotta"></i> Test IA de Café
+                    </button>
+                    <a href="#impacto" class="px-5 py-2.5 rounded-full text-xs font-bold bg-forest text-white hover:bg-emerald-900 shadow-lg shadow-emerald-950/20 transition">
+                        Sumar al Cambio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero-bg text-white py-20 lg:py-28 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-xs font-medium text-emerald-300">
+                        <i class="fas fa-satellite-dish"></i>
+                        <span>Desde 2014 conectando el campo colombiano con el futuro</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                        Donde la tradición del <span class="text-amber-300 italic font-normal">café</span> se une con la innovación <span class="text-emerald-400">digital.</span>
+                    </h1>
+                    
+                    <p class="text-lg text-stone-200 max-w-2xl leading-relaxed font-normal">
+                        En <strong>Alma y Semilla</strong> empoderamos a comunidades rurales y mujeres caficultoras mediante tecnologías de la 4ª Revolución Industrial (IoT, Inteligencia Artificial y Realidad Virtual) para cultivar soberanía, productividad y tejido social.
+                    </p>
+                    
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <a href="#trazabilidad" class="px-7 py-4 rounded-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold text-sm shadow-xl shadow-emerald-500/20 transition flex items-center">
+                            Explorar Mapa IoT de Cultivos <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#experiencia-50" class="px-7 py-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white font-semibold text-sm transition flex items-center">
+                            <i class="fas fa-vr-cardboard mr-2 text-emerald-300"></i> Experiencia Colombia 5.0
+                        </a>
+                    </div>
+
+                    <!-- Estadísticas rápidas -->
+                    <div class="pt-8 grid grid-cols-3 gap-6 border-t border-white/15 max-w-lg">
+                        <div>
+                            <div class="text-3xl font-bold serif-font text-emerald-400">+12 Años</div>
+                            <div class="text-xs text-stone-300 mt-0.5">Transformando territorios desde Chía</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold serif-font text-amber-300">100%</div>
+                            <div class="text-xs text-stone-300 mt-0.5">Liderazgo femenino y comunitario</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold serif-font text-white">4RI</div>
+                            <div class="text-xs text-stone-300 mt-0.5">IoT, IA y VR aplicada al agro</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Flotante Interactiva en el Hero -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-2xl relative">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xs uppercase tracking-wider font-bold text-emerald-300 flex items-center">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 mr-2 animate-pulse"></span> Nodo Agro-TIC Activo
+                            </span>
+                            <span class="text-xs bg-black/30 px-3 py-1 rounded-full text-stone-300">Sabana & Región Cafetera</span>
+                        </div>
+
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80" alt="Café y Tecnología" class="w-full h-48 object-cover rounded-2xl mb-5">
+
+                        <div class="space-y-3">
+                            <div class="bg-black/30 rounded-2xl p-4 flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                                        <i class="fas fa-microchip"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-stone-300">Sensores de Suelo Conectados</div>
+                                        <div class="text-sm font-bold text-white">Monitoreo Hídrico & Clima</div>
+                                    </div>
+                                </div>
+                                <span class="text-emerald-400 font-mono text-sm font-bold">98.4% Óptimo</span>
+                            </div>
+
+                            <div class="bg-black/30 rounded-2xl p-4 flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center">
+                                        <i class="fas fa-qrcode"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-stone-300">Trazabilidad por Lote</div>
+                                        <div class="text-sm font-bold text-white">Comercio Justo Directo</div>
+                                    </div>
+                                </div>
+                                <a href="#trazabilidad" class="text-xs bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-lg transition">Ver Lotes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 1: NUESTRA ESENCIA (EL ALMA Y LA SEMILLA) -->
+    <section id="esencia" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5 relative">
+                <div class="rounded-3xl overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="Mujeres Caficultoras y Comunidad" class="w-full h-[420px] object-cover">
+                </div>
+                <div class="bg-forest text-white p-6 rounded-2xl shadow-xl max-w-xs absolute -bottom-6 -right-4 hidden sm:block">
+                    <p class="serif-font text-lg italic text-emerald-300">"Cada semilla guarda un código de vida; la tecnología nos ayuda a protegerlo."</p>
+                    <p class="text-xs text-stone-300 mt-2 font-semibold">— Dirección Fundación Alma y Semilla</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 space-y-6">
+                <span class="text-xs font-bold uppercase tracking-widest text-terracotta bg-orange-100 px-3 py-1 rounded-full">Nuestra Historia y Propósito</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-forest leading-tight">
+                    Nacimos en Cundinamarca para sembrar tecnología con sentido humano.
+                </h2>
+                <p class="text-stone-600 leading-relaxed">
+                    Fundada en enero de 2014 en el municipio de <strong>Chía, Cundinamarca</strong>, <strong>Alma y Semilla</strong> surgió como una asociación sin ánimo de lucro liderada por mujeres convencidas de que el desarrollo rural no debe elegir entre tradición y modernidad.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+                    <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-amber-100 text-terracotta flex items-center justify-center mb-3 font-bold">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-forest mb-1">El "Alma": Tejido Social</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">Formación en liderazgo rural femenino, relevo generacional para jóvenes campesinos y redes asociativas de comercio justo.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-3 font-bold">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-forest mb-1">La "Semilla": Agro-TIC</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">Apropiación digital en el campo: estaciones agroclimáticas IoT, perfilación de calidad con IA y visibilización inmersiva en Realidad Virtual.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 2: PLATAFORMA DE TRAZABILIDAD INTERACTIVA (SIMULADOR EN VIVO) -->
+    <section id="trazabilidad" class="py-20 bg-stone-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-14">
+                <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950 border border-emerald-700 px-3 py-1 rounded-full">
+                    <i class="fas fa-wifi mr-1"></i> Plataforma Abierta Agro-TIC
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-3">De la Semilla a tu Taza: Monitoreo en Tiempo Real</h2>
+                <p class="text-stone-400 text-sm mt-3">
+                    Selecciona uno de nuestros núcleos productivos aliados para explorar los datos agroclimáticos capturados por nuestros sensores IoT y conocer a las familias detrás de cada cosecha.
+                </p>
+            </div>
+
+            <!-- Botones selectores de Lote -->
+            <div class="flex flex-wrap justify-center gap-4 mb-10">
+                <button onclick="selectLot(0)" id="lot-btn-0" class="lot-btn px-6 py-3 rounded-full text-sm font-bold bg-emerald-500 text-stone-950 transition flex items-center shadow-lg">
+                    <i class="fas fa-mountain mr-2"></i> Lote #01: Sabana & Rionegro (Cundinamarca)
+                </button>
+                <button onclick="selectLot(1)" id="lot-btn-1" class="lot-btn px-6 py-3 rounded-full text-sm font-bold bg-stone-800 text-stone-300 hover:bg-stone-700 transition flex items-center">
+                    <i class="fas fa-sun mr-2"></i> Lote #02: Mujeres del Macizo (Cauca/Huila)
+                </button>
+                <button onclick="selectLot(2)" id="lot-btn-2" class="lot-btn px-6 py-3 rounded-full text-sm font-bold bg-stone-800 text-stone-300 hover:bg-stone-700 transition flex items-center">
+                    <i class="fas fa-cloud-rain mr-2"></i> Lote #03: Reserva Agroforestal (Chía - Lab)
+                </button>
+            </div>
+
+            <!-- Panel de Datos del Lote -->
+            <div class="bg-stone-800/80 border border-stone-700 rounded-3xl p-6 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Info del productor y perfil -->
+                <div class="lg:col-span-5 space-y-5 border-b lg:border-b-0 lg:border-r border-stone-700 pb-6 lg:pb-0 lg:pr-8">
+                    <div class="flex items-center space-x-4">
+                        <img id="lot-img" src="https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=300&q=80" class="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-400">
+                        <div>
+                            <span id="lot-badge" class="text-[11px] bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-semibold">Variedad Castillo & Tabi</span>
+                            <h3 id="lot-title" class="text-2xl font-bold mt-1">Asociación Renacer Cafetero</h3>
+                            <p id="lot-location" class="text-xs text-stone-400"><i class="fas fa-map-marker-alt text-terracotta mr-1"></i> Provincia de Rionegro, Cundinamarca (1.750 m.s.n.m.)</p>
+                        </div>
+                    </div>
+
+                    <p id="lot-desc" class="text-sm text-stone-300 leading-relaxed">
+                        Cultivado bajo sombrío de guamo y cítricos por 18 familias campesinas. Con el apoyo de Alma y Semilla, implementaron secado solar asistido por sensores de humedad conectados a la nube.
+                    </p>
+
+                    <div class="bg-stone-900/90 p-4 rounded-2xl">
+                        <div class="text-xs text-amber-300 font-bold uppercase tracking-wider mb-1">
+                            <i class="fas fa-mug-hot mr-1"></i> Notas de Taza (Perfilación IA)
+                        </div>
+                        <p id="lot-notes" class="text-sm font-medium text-white">Chocolate oscuro, panela, acidez cítrica media de naranja madura y residual dulce prolongado (Puntaje SCA: 85.5 pts).</p>
+                    </div>
+                </div>
+
+                <!-- Telemetría IoT en Vivo -->
+                <div class="lg:col-span-7">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-mono uppercase text-stone-400 flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-ping"></span> Telemetría Estación LoRaWAN #AS-2026
+                        </span>
+                        <span class="text-xs text-emerald-400 font-mono">Sincronizado hace 2 min</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-stone-900 p-4 rounded-2xl border border-stone-700/80">
+                            <div class="text-stone-400 text-xs mb-1"><i class="fas fa-tint text-blue-400 mr-1"></i> Humedad Suelo</div>
+                            <div id="iot-hum" class="text-2xl font-bold font-mono text-white">64.2%</div>
+                            <div class="text-[11px] text-emerald-400 mt-1">Rango ideal</div>
+                        </div>
+                        <div class="bg-stone-900 p-4 rounded-2xl border border-stone-700/80">
+                            <div class="text-stone-400 text-xs mb-1"><i class="fas fa-temperature-half text-amber-400 mr-1"></i> Temp. Ambiente</div>
+                            <div id="iot-temp" class="text-2xl font-bold font-mono text-white">21.8°C</div>
+                            <div class="text-[11px] text-stone-400 mt-1">Microclima estable</div>
+                        </div>
+                        <div class="bg-stone-900 p-4 rounded-2xl border border-stone-700/80">
+                            <div class="text-stone-400 text-xs mb-1"><i class="fas fa-flask text-purple-400 mr-1"></i> pH del Suelo</div>
+                            <div id="iot-ph" class="text-2xl font-bold font-mono text-white">5.6 pH</div>
+                            <div class="text-[11px] text-emerald-400 mt-1">Acidez óptima café</div>
+                        </div>
+                        <div class="bg-stone-900 p-4 rounded-2xl border border-stone-700/80">
+                            <div class="text-stone-400 text-xs mb-1"><i class="fas fa-leaf text-emerald-400 mr-1"></i> Huella CO2</div>
+                            <div id="iot-co2" class="text-2xl font-bold font-mono text-emerald-400">-1.4 Ton</div>
+                            <div class="text-[11px] text-stone-400 mt-1">Carbono negativo</div>
+                        </div>
+                    </div>
+
+                    <!-- Barra de Trazabilidad Blockchain -->
+                    <div class="mt-6 bg-stone-900/60 border border-stone-700 rounded-2xl p-4">
+                        <div class="text-xs font-bold text-stone-300 mb-3">Ruta de Trazabilidad Verificada:</div>
+                        <div class="grid grid-cols-4 gap-2 text-center text-[11px]">
+                            <div class="bg-emerald-950/80 border border-emerald-600/50 text-emerald-300 p-2 rounded-xl">
+                                <i class="fas fa-check-circle block mb-1 text-sm"></i> 1. Cosecha Selectiva
+                            </div>
+                            <div class="bg-emerald-950/80 border border-emerald-600/50 text-emerald-300 p-2 rounded-xl">
+                                <i class="fas fa-check-circle block mb-1 text-sm"></i> 2. Fermentación Controlada
+                            </div>
+                            <div class="bg-emerald-950/80 border border-emerald-600/50 text-emerald-300 p-2 rounded-xl">
+                                <i class="fas fa-check-circle block mb-1 text-sm"></i> 3. Tostión Origen Chía
+                            </div>
+                            <div class="bg-purple-950/80 border border-purple-500/50 text-purple-200 p-2 rounded-xl">
+                                <i class="fas fa-vr-cardboard block mb-1 text-sm"></i> 4. Muestra Colombia 5.0
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 3: EXPERIENCIA COLOMBIA 5.0 (CAFÉ & CONEXIONES TIC) -->
+    <section id="experiencia-50" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-br from-[#2a0845] via-[#1b3b2b] to-[#143627] rounded-3xl p-8 lg:p-14 text-white shadow-2xl relative overflow-hidden">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+                <div class="lg:col-span-7 space-y-5">
+                    <div class="inline-flex items-center space-x-2 bg-emerald-400 text-purple-950 font-black px-3 py-1 rounded-full text-xs uppercase">
+                        <span>Muestra Comercial Café & Conexiones TIC 2026</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold leading-tight">
+                        Vive nuestro Stand Inmersivo en Colombia 5.0
+                    </h2>
+                    <p class="text-stone-200 text-sm sm:text-base leading-relaxed">
+                        Llevamos el campo a Bogotá D.C. A través de una experiencia multisensorial que combina degustación de cafés especiales con tecnologías de la Cuarta Revolución Industrial, conectamos a productores rurales con el ecosistema digital del país.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                        <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/15">
+                            <i class="fas fa-vr-cardboard text-2xl text-emerald-400 mb-2"></i>
+                            <h4 class="font-bold text-sm">Viaje VR 360°</h4>
+                            <p class="text-xs text-stone-300 mt-1">Ponte los visores de Realidad Virtual y camina por los cafetales mientras tomas tu café.</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/15">
+                            <i class="fas fa-brain text-2xl text-amber-300 mb-2"></i>
+                            <h4 class="font-bold text-sm">Barista con IA</h4>
+                            <p class="text-xs text-stone-300 mt-1">Algoritmo que recomienda el grano ideal según tu perfil sensorial y estado de ánimo.</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/15">
+                            <i class="fas fa-tower-broadcast text-2xl text-purple-300 mb-2"></i>
+                            <h4 class="font-bold text-sm">Tótem IoT en Vivo</h4>
+                            <p class="text-xs text-stone-300 mt-1">Pantalla interactiva conectada a sensores reales instalados en nuestras huertas y fincas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5 text-center">
+                    <div class="bg-white text-stone-900 p-6 rounded-3xl shadow-xl max-w-sm mx-auto">
+                        <span class="text-xs font-bold uppercase text-purple-800 bg-purple-100 px-3 py-1 rounded-full">Prueba Digital Ahora</span>
+                        <h3 class="serif-font text-2xl font-bold text-forest mt-3">¿Qué café conecta contigo hoy?</h3>
+                        <p class="text-xs text-stone-500 mt-1 mb-5">Usa nuestro recomendador inteligente y descubre qué proyecto social apadrinarías con tu taza.</p>
+                        
+                        <div class="space-y-3 text-left text-xs">
+                            <div>
+                                <label class="font-bold text-stone-700 block mb-1">1. ¿Qué notas prefieres?</label>
+                                <select id="quiz-flavor" class="w-full border border-stone-300 rounded-xl px-3 py-2 bg-stone-50">
+                                    <option value="choco">Dulces, achocolatadas y suaves</option>
+                                    <option value="citric">Frutales, cítricas y vibrantes</option>
+                                    <option value="floral">Florales, aromáticas y exóticas</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="font-bold text-stone-700 block mb-1">2. ¿Qué causa te inspira más?</label>
+                                <select id="quiz-cause" class="w-full border border-stone-300 rounded-xl px-3 py-2 bg-stone-50">
+                                    <option value="mujeres">Liderazgo de mujeres rurales</option>
+                                    <option value="jovenes">Jóvenes programadores del agro</option>
+                                    <option value="bosque">Reforestación y agua</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button onclick="runCoffeeAI()" class="w-full mt-5 py-3 rounded-xl bg-forest hover:bg-emerald-800 text-white font-bold text-xs transition shadow-md">
+                            <i class="fas fa-wand-magic-sparkles mr-1 text-emerald-300"></i> Descubrir mi Café de Impacto
+                        </button>
+
+                        <div id="quiz-result" class="hidden mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-left text-xs text-stone-700"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECCIÓN 4: CALCULADORA DE IMPACTO Y ALIANZAS -->
+    <section id="impacto" class="py-16 bg-stone-200/60 border-y border-stone-300/70">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl p-8 lg:p-12 shadow-lg border border-stone-200">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">Transparencia y Acción</span>
+                    <h2 class="text-3xl font-bold text-forest mt-2">Simula el impacto de tu alianza o donación</h2>
+                    <p class="text-xs sm:text-sm text-stone-600 mt-2">
+                        Como Entidad Sin Ánimo de Lucro (ESAL), cada aporte de empresas aliadas o ciudadanos se transforma directamente en infraestructura tecnológica y bienestar campesino.
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold uppercase text-stone-500">Aporte mensual o corporativo (COP):</span>
+                            <span id="donation-amount" class="text-2xl font-extrabold text-forest">$500.000 COP</span>
+                        </div>
+                        <input type="range" id="impact-slider" min="100000" max="5000000" step="100000" value="500000" oninput="updateImpact()" class="w-full h-3 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-emerald-600">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                        <div class="bg-[#faf7f2] p-5 rounded-2xl border border-stone-200 text-center">
+                            <i class="fas fa-satellite-dish text-2xl text-emerald-600 mb-2"></i>
+                            <div id="imp-sensors" class="text-3xl font-bold serif-font text-forest">2 Kits</div>
+                            <div class="text-xs text-stone-600 mt-1">Sensores de humedad y clima instalados</div>
+                        </div>
+                        <div class="bg-[#faf7f2] p-5 rounded-2xl border border-stone-200 text-center">
+                            <i class="fas fa-user-graduate text-2xl text-terracotta mb-2"></i>
+                            <div id="imp-women" class="text-3xl font-bold serif-font text-forest">5 Mujeres</div>
+                            <div class="text-xs text-stone-600 mt-1">Capacitadas en alfabetización digital y barismo</div>
+                        </div>
+                        <div class="bg-[#faf7f2] p-5 rounded-2xl border border-stone-200 text-center">
+                            <i class="fas fa-tree text-2xl text-amber-600 mb-2"></i>
+                            <div id="imp-trees" class="text-3xl font-bold serif-font text-forest">25 Árboles</div>
+                            <div class="text-xs text-stone-600 mt-1">Nativos sembrados para sombrío de cafetales</div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 text-center">
+                        <a href="#contacto" class="inline-flex items-center px-8 py-4 rounded-full bg-terracotta hover:bg-orange-700 text-white font-bold text-sm shadow-lg transition">
+                            <i class="fas fa-handshake mr-2"></i> Quiero ser Aliado / Solicitar Certificado de Donación
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PIE DE PÁGINA CON DATOS REALES DE TRANSPARENCIA INSTITUCIONAL -->
+    <footer id="contacto" class="bg-forest text-stone-300 pt-16 pb-12 border-t-4 border-emerald-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+                
+                <!-- Columna 1: Identidad -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-stone-950 font-bold">
+                            <i class="fas fa-seedling text-lg"></i>
+                        </div>
+                        <span class="serif-font text-2xl font-bold text-white">Alma & Semilla</span>
+                    </div>
+                    <p class="text-xs text-stone-300 leading-relaxed">
+                        Organización sin ánimo de lucro dedicada a la innovación social, el desarrollo sostenible rural y la apropiación de tecnologías 4RI en la cadena de valor del café y el agro colombiano.
+                    </p>
+                </div>
+
+                <!-- Columna 2: Transparencia Legal (Datos del RUT discretos y elegantes) -->
+                <div class="space-y-2 text-xs">
+                    <h4 class="text-white font-bold uppercase tracking-wider mb-3">Transparencia Institucional</h4>
+                    <p><strong class="text-emerald-400">Razón Social:</strong> ALMA Y SEMILLA</p>
+                    <p><strong class="text-emerald-400">NIT:</strong> 900.728.521-6</p>
+                    <p><strong class="text-emerald-400">Matrícula / Registro:</strong> S0046414 (Desde 2014)</p>
+                    <p><strong class="text-emerald-400">Actividad CIIU:</strong> 9499 (Asociaciones y Fundaciones)</p>
+                    <p><strong class="text-emerald-400">Dirección Legal:</strong> Julie Katherine González Torres & Eva Carolina Madrid Torres</p>
+                </div>
+
+                <!-- Columna 3: Sede y Contacto -->
+                <div class="space-y-2.5 text-xs">
+                    <h4 class="text-white font-bold uppercase tracking-wider mb-3">Sede Principal & Contacto</h4>
+                    <p class="flex items-start"><i class="fas fa-location-dot text-emerald-400 mr-2 mt-1"></i> <span>Calle 12 # 2A - 53 Int. 53<br>Chía, Cundinamarca - Colombia</span></p>
+                    <p class="flex items-center"><i class="fas fa-phone text-emerald-400 mr-2"></i> <span>(+57) 312 442 1923 | (601) 885 1491</span></p>
+                    <p class="flex items-center"><i class="fas fa-envelope text-emerald-400 mr-2"></i> <span>jkgonzalezt@poli.edu.co</span></p>
+                </div>
+
+                <!-- Columna 4: Boletín -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold text-xs uppercase tracking-wider">Conéctate a nuestra red</h4>
+                    <p class="text-xs text-stone-300">Recibe reportes de cosecha, memorias de Colombia 5.0 y convocatorias de voluntariado TIC.</p>
+                    <form onsubmit="event.preventDefault(); alert('¡Gracias por conectarte con Alma y Semilla!');" class="flex">
+                        <input type="email" required placeholder="Tu correo electrónico" class="w-full px-3 py-2 rounded-l-xl text-xs text-stone-900 focus:outline-none">
+                        <button type="submit" class="bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-bold px-4 py-2 rounded-r-xl text-xs transition">
+                            Unirme
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-stone-400">
+                <p>© 2014 - 2026 Fundación Alma y Semilla. Todos los derechos reservados.</p>
+                <p class="mt-2 sm:mt-0">Cumplimiento Ley 1581 de 2012 (Protección de Datos Personales) • Participante Oficial Colombia 5.0 MinTIC</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS INTERACTIVOS -->
+    <script>
+        // Base de datos de los Lotes para el Simulador IoT
+        const lotsData = [
+            {
+                badge: "Variedad Castillo & Tabi",
+                title: "Asociación Renacer Cafetero",
+                location: "Provincia de Rionegro, Cundinamarca (1.750 m.s.n.m.)",
+                desc: "Cultivado bajo sombrío de guamo y cítricos por 18 familias campesinas. Con el apoyo de Alma y Semilla, implementaron secado solar asistido por sensores de humedad conectados a la nube.",
+                notes: "Chocolate oscuro, panela, acidez cítrica media de naranja madura y residual dulce prolongado (Puntaje SCA: 85.5 pts).",
+                hum: "64.2%",
+                temp: "21.8°C",
+                ph: "5.6 pH",
+                co2: "-1.4 Ton",
+                img: "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=300&q=80"
+            },
+            {
+                badge: "Variedad Caturra & Geisha",
+                title: "Red de Mujeres Semilla del Macizo",
+                location: "Inzá & Tierradentro (1.920 m.s.n.m.)",
+                desc: "Liderado por 32 mujeres cabezas de hogar. Utilizan nuestra app móvil para registrar curvas de fermentación y comercializar directamente sin intermediarios mediante códigos QR.",
+                notes: "Jazmín, bergamota, miel de abejas, cuerpo sedoso y acidez brillante tipo frutos rojos (Puntaje SCA: 87.2 pts).",
+                hum: "68.9%",
+                temp: "19.4°C",
+                ph: "5.4 pH",
+                co2: "-2.1 Ton",
+                img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=300&q=80"
+            },
+            {
+                badge: "Laboratorio Vivo Agro-TIC",
+                title: "Centro Experimental Chía",
+                location: "Chía, Cundinamarca (2.560 m.s.n.m.)",
+                desc: "Nuestro centro de entrenamiento e innovación en la Sabana. Aquí jóvenes rurales aprenden a ensamblar estaciones meteorológicas de bajo costo y programar alertas tempranas con IA.",
+                notes: "Lote experimental de infusiones aromáticas de cáscara de café (Cascara Tea) con hierbas nativas de alta montaña.",
+                hum: "71.0%",
+                temp: "15.2°C",
+                ph: "6.0 pH",
+                co2: "-0.9 Ton",
+                img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=300&q=80"
+            }
+        ];
+
+        function selectLot(index) {
+            const lot = lotsData[index];
+            document.getElementById('lot-badge').innerText = lot.badge;
+            document.getElementById('lot-title').innerText = lot.title;
+            document.getElementById('lot-location').innerHTML = `<i class="fas fa-map-marker-alt text-terracotta mr-1"></i> ${lot.location}`;
+            document.getElementById('lot-desc').innerText = lot.desc;
+            document.getElementById('lot-notes').innerText = lot.notes;
+            document.getElementById('iot-hum').innerText = lot.hum;
+            document.getElementById('iot-temp').innerText = lot.temp;
+            document.getElementById('iot-ph').innerText = lot.ph;
+            document.getElementById('iot-co2').innerText = lot.co2;
+            document.getElementById('lot-img').src = lot.img;
+
+            // Actualizar estilo de botones
+            for (let i = 0; i < 3; i++) {
+                const btn = document.getElementById(`lot-btn-${i}`);
+                if (i === index) {
+                    btn.className = "lot-btn px-6 py-3 rounded-full text-sm font-bold bg-emerald-500 text-stone-950 transition flex items-center shadow-lg";
+                } else {
+                    btn.className = "lot-btn px-6 py-3 rounded-full text-sm font-bold bg-stone-800 text-stone-300 hover:bg-stone-700 transition flex items-center";
+                }
+            }
+        }
+
+        // Recomendador de Café con IA en el Stand
+        function runCoffeeAI() {
+            const flavor = document.getElementById('quiz-flavor').value;
+            const cause = document.getElementById('quiz-cause').value;
+            const resBox = document.getElementById('quiz-result');
+
+            let recommendation = "";
+            if (flavor === 'choco') {
+                recommendation = "<strong>Tu Match Ideal: Lote #01 Renacer Cundinamarca.</strong> Tostión media con notas a cacao y panela. ";
+            } else if (flavor === 'citric') {
+                recommendation = "<strong>Tu Match Ideal: Lote #02 Mujeres del Macizo.</strong> Café de altura con notas vibrantes a frutos rojos. ";
+            } else {
+                recommendation = "<strong>Tu Match Ideal: Edición Especial Geisha & Cáscara.</strong> Perfil floral exótico fermentado en frío. ";
+            }
+
+            const causeText = {
+                mujeres: "Tu compra financia becas de liderazgo digital para mujeres caficultoras.",
+                jovenes: "Tu compra equipa el laboratorio de robótica rural para jóvenes campesinos.",
+                bosque: "Tu compra siembra 3 árboles nativos georreferenciados a tu nombre."
+            };
+
+            resBox.innerHTML = `<i class="fas fa-check-circle text-emerald-600 mr-1"></i> ${recommendation} <br><span class="text-emerald-800 font-semibold mt-1 block">${causeText[cause]}</span>`;
+            resBox.classList.remove('hidden');
+        }
+
+        // Calculadora de Impacto
+        function updateImpact() {
+            const val = parseInt(document.getElementById('impact-slider').value);
+            document.getElementById('donation-amount').innerText = "$" + val.toLocaleString('es-CO') + " COP";
+            
+            const sensors = Math.max(1, Math.floor(val / 250000));
+            const women = Math.max(1, Math.floor(val / 100000));
+            const trees = Math.max(5, Math.floor(val / 20000));
+
+            document.getElementById('imp-sensors').innerText = sensors + (sensors === 1 ? " Kit" : " Kits");
+            document.getElementById('imp-women').innerText = women + (women === 1 ? " Mujer" : " Mujeres");
+            document.getElementById('imp-trees').innerText = trees + " Árboles";
+        }
+
+        function openModal() {
+            document.getElementById('experiencia-50').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
+```

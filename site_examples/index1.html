@@ -1,0 +1,359 @@
+Entendido. Aquí tienes una **página web institucional para la Fundación Alma y Semilla**, diseñada con el lenguaje visual que corresponde a una fundación social de raíz comunitaria y vocación ambiental (tonos tierra, verdes orgánicos, tipografía cálida, formas suaves). Solo uso del RUT lo verificable (nombre, NIT, ubicación, contacto); el resto —misión, programas, cifras— es una **propuesta editorial** que deberás ajustar a la realidad de la fundación.
+
+Guarda como `almaysemilla.html` y ábrelo en el navegador.
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundación Alma y Semilla · Sembramos futuro en Chía</title>
+<meta name="description" content="Fundación Alma y Semilla: educación, comunidad y territorio en la Sabana de Bogotá.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tierra:#8a4b2f; --tierra-cl:#c9875f; --hoja:#3f6b3a; --hoja-cl:#8fb57a;
+    --sol:#e9b44c; --crema:#faf6ee; --arena:#f1e7d6; --carbon:#2b2722; --gris:#6b645b;
+    --r:28px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Nunito',sans-serif;color:var(--carbon);background:var(--crema);line-height:1.65;overflow-x:hidden}
+  h1,h2,h3,.serif{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .cont{width:min(1140px,92%);margin:auto}
+  section{padding:96px 0}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--hoja)}
+  .eyebrow::before{content:"";width:28px;height:2px;background:var(--sol)}
+  h2{font-size:clamp(30px,4vw,46px);line-height:1.1;margin:14px 0 18px}
+  .lead{font-size:18px;color:var(--gris);max-width:640px}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:999px;font-weight:700;background:var(--hoja);color:#fff;border:2px solid var(--hoja);transition:.25s;cursor:pointer;font-size:15px}
+  .btn:hover{background:var(--tierra);border-color:var(--tierra);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--hoja)}
+  .btn.ghost:hover{background:var(--hoja);color:#fff}
+  .btn.sol{background:var(--sol);border-color:var(--sol);color:var(--carbon)}
+  .btn.sol:hover{background:#d9a238;border-color:#d9a238}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:.3s;padding:18px 0}
+  nav.scrolled{background:rgba(250,246,238,.92);backdrop-filter:blur(10px);box-shadow:0 4px 30px rgba(43,39,34,.08);padding:10px 0}
+  nav .cont{display:flex;align-items:center;justify-content:space-between}
+  .marca{display:flex;align-items:center;gap:12px}
+  .marca .ico{width:46px;height:46px}
+  .marca b{font-family:'Fraunces',serif;font-size:20px;line-height:1.05;display:block}
+  .marca small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gris)}
+  .links{display:flex;gap:30px;align-items:center}
+  .links a{font-weight:600;font-size:15px;position:relative}
+  .links a::after{content:"";position:absolute;left:0;bottom:-6px;width:0;height:2px;background:var(--sol);transition:.25s}
+  .links a:hover::after{width:100%}
+  .burger{display:none;width:40px;height:40px;background:none;border:0;cursor:pointer;flex-direction:column;gap:6px;justify-content:center;align-items:center}
+  .burger span{width:26px;height:2px;background:var(--carbon);display:block}
+  @media(max-width:860px){
+    .links{position:fixed;inset:0;background:var(--crema);flex-direction:column;justify-content:center;font-size:22px;transform:translateX(100%);transition:.35s}
+    .links.open{transform:none}
+    .burger{display:flex;z-index:101}
+  }
+
+  /* HERO */
+  .hero{min-height:100vh;display:grid;align-items:center;padding:140px 0 80px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;right:-18vw;top:-10vh;width:70vw;height:70vw;max-width:900px;max-height:900px;background:radial-gradient(circle at 40% 40%,var(--arena),transparent 65%);z-index:0}
+  .hero .cont{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;position:relative;z-index:1}
+  .hero h1{font-size:clamp(42px,6.2vw,80px);line-height:1.02;font-weight:300}
+  .hero h1 em{font-style:italic;color:var(--hoja);font-weight:600}
+  .hero p{font-size:19px;color:var(--gris);margin:26px 0 36px;max-width:520px}
+  .hero .acc{display:flex;gap:14px;flex-wrap:wrap}
+  .blob{position:relative;aspect-ratio:1;max-width:520px;margin-left:auto}
+  .blob svg{width:100%;height:100%}
+  .tag{position:absolute;background:#fff;border-radius:18px;padding:12px 18px;box-shadow:0 14px 40px rgba(43,39,34,.12);font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px;animation:flota 6s ease-in-out infinite}
+  .tag i{font-style:normal;font-size:20px}
+  .t1{top:8%;left:-6%}.t2{bottom:14%;left:-10%;animation-delay:-2s}.t3{top:40%;right:-8%;animation-delay:-4s}
+  @keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @media(max-width:900px){.hero .cont{grid-template-columns:1fr}.blob{max-width:380px;margin:auto}}
+
+  /* MARQUEE */
+  .cinta{background:var(--hoja);color:var(--crema);padding:16px 0;overflow:hidden;white-space:nowrap}
+  .cinta div{display:inline-block;animation:desliza 30s linear infinite;font-family:'Fraunces',serif;font-size:20px;font-style:italic}
+  .cinta span{margin:0 34px}
+  @keyframes desliza{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* QUIÉNES SOMOS */
+  .somos .cont{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+  .somos .fotos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .foto{border-radius:var(--r);aspect-ratio:3/4;background:var(--arena);position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:20px;color:#fff;font-weight:700;font-size:14px}
+  .foto::before{content:"";position:absolute;inset:0;background:var(--g)}
+  .foto span{position:relative}
+  .foto:nth-child(2){margin-top:40px}
+  .valores{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+  .valor{display:flex;gap:12px;align-items:flex-start}
+  .valor i{font-style:normal;width:40px;height:40px;border-radius:12px;background:var(--arena);display:grid;place-items:center;font-size:18px;flex:none}
+  .valor b{display:block;font-size:15px}
+  .valor p{font-size:14px;color:var(--gris)}
+  @media(max-width:900px){.somos .cont{grid-template-columns:1fr}}
+
+  /* PROGRAMAS */
+  .programas{background:var(--arena);border-radius:80px 80px 0 0}
+  .prog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:22px;margin-top:50px}
+  .prog{background:var(--crema);border-radius:var(--r);padding:34px 28px;transition:.3s;position:relative;overflow:hidden}
+  .prog::after{content:"";position:absolute;right:-30px;bottom:-30px;width:120px;height:120px;border-radius:50%;background:var(--c);opacity:.18;transition:.4s}
+  .prog:hover{transform:translateY(-8px);box-shadow:0 24px 50px rgba(138,75,47,.14)}
+  .prog:hover::after{transform:scale(1.6)}
+  .prog .ico{width:58px;height:58px;border-radius:18px;background:var(--c);display:grid;place-items:center;font-size:26px;margin-bottom:22px}
+  .prog h3{font-size:22px;margin-bottom:10px}
+  .prog p{font-size:15px;color:var(--gris)}
+  .prog a{display:inline-block;margin-top:18px;font-weight:700;color:var(--hoja)}
+
+  /* IMPACTO */
+  .impacto{background:var(--tierra);color:var(--crema);position:relative;overflow:hidden}
+  .impacto::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M60 10c20 20 20 40 0 60-20-20-20-40 0-60z' fill='none' stroke='%23fff' stroke-opacity='.08'/%3E%3C/svg%3E")}
+  .impacto .cont{position:relative}
+  .impacto .eyebrow{color:var(--sol)}
+  .cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:30px;margin-top:50px}
+  .cifra b{font-family:'Fraunces',serif;font-size:clamp(44px,5vw,66px);font-weight:300;line-height:1;display:block;color:var(--sol)}
+  .cifra span{font-size:15px;opacity:.85;display:block;margin-top:8px}
+  .cita{margin-top:70px;padding:40px;border-left:3px solid var(--sol);max-width:760px;font-family:'Fraunces',serif;font-style:italic;font-size:24px;font-weight:300;line-height:1.4}
+  .cita small{display:block;font-family:'Nunito',sans-serif;font-style:normal;font-size:14px;margin-top:16px;opacity:.8}
+
+  /* COL 5.0 */
+  .col50 .caja{background:linear-gradient(135deg,#4a0f6e,#6a1b9a);color:#fff;border-radius:var(--r);padding:60px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+  .col50 h2{color:#fff}
+  .col50 .eyebrow{color:#00e676}.col50 .eyebrow::before{background:#00e676}
+  .col50 p{opacity:.9;margin-bottom:26px}
+  .col50 .btn{background:#00e676;border-color:#00e676;color:#4a0f6e}
+  .col50 .stand{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:26px}
+  .col50 .stand li{list-style:none;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.2);font-size:14px;display:flex;gap:10px}
+  .col50 .stand li:last-child{border:0}
+  @media(max-width:860px){.col50 .caja{grid-template-columns:1fr;padding:40px 28px}}
+
+  /* PARTICIPA */
+  .participa .opciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:50px}
+  .op{border:2px solid var(--arena);border-radius:var(--r);padding:36px 30px;background:#fff;transition:.3s}
+  .op:hover{border-color:var(--hoja-cl)}
+  .op h3{font-size:24px;margin:14px 0 10px}
+  .op p{color:var(--gris);font-size:15px;margin-bottom:20px}
+  .op .ico{font-size:32px}
+
+  /* CONTACTO */
+  .contacto{background:var(--arena);border-radius:0 0 80px 80px}
+  .contacto .cont{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+  .info li{list-style:none;display:flex;gap:14px;margin:18px 0;font-size:16px}
+  .info i{font-style:normal;font-size:20px;width:30px}
+  form{background:#fff;border-radius:var(--r);padding:34px;display:grid;gap:14px}
+  input,textarea,select{width:100%;padding:14px 16px;border:1.5px solid var(--arena);border-radius:14px;font:inherit;font-size:15px;background:var(--crema)}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--hoja)}
+  textarea{min-height:120px;resize:vertical}
+  .dos{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:860px){.contacto .cont{grid-template-columns:1fr}.dos{grid-template-columns:1fr}}
+
+  footer{padding:50px 0 30px;text-align:center;color:var(--gris);font-size:14px}
+  footer .marca{justify-content:center;margin-bottom:14px}
+  footer .legal{margin-top:18px;font-size:12px;opacity:.8}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:.8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="cont">
+    <a href="#inicio" class="marca">
+      <svg class="ico" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#f1e7d6"/><path d="M24 40V22" stroke="#3f6b3a" stroke-width="2.5" stroke-linecap="round"/><path d="M24 26c0-8 6-13 14-13 0 8-6 13-14 13z" fill="#8fb57a"/><path d="M24 30c0-7-5-11-12-11 0 7 5 11 12 11z" fill="#3f6b3a"/><circle cx="24" cy="12" r="3.5" fill="#e9b44c"/></svg>
+      <div><b>Alma y Semilla</b><small>Fundación · Chía</small></div>
+    </a>
+    <div class="links" id="links">
+      <a href="#somos">Quiénes somos</a>
+      <a href="#programas">Programas</a>
+      <a href="#impacto">Impacto</a>
+      <a href="#participa">Participa</a>
+      <a href="#contacto" class="btn" style="padding:11px 22px">Donar</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="cont">
+    <div>
+      <span class="eyebrow">Fundación sin ánimo de lucro · desde 2014</span>
+      <h1>Cultivamos <em>personas</em>, <br>cosechamos <em>comunidad</em>.</h1>
+      <p>Acompañamos a familias, niñas, niños y jóvenes de la Sabana de Bogotá con educación, bienestar emocional y proyectos productivos que echan raíz en el territorio.</p>
+      <div class="acc">
+        <a href="#programas" class="btn">Conoce nuestros programas</a>
+        <a href="#participa" class="btn ghost">Quiero ayudar</a>
+      </div>
+    </div>
+    <div class="blob">
+      <svg viewBox="0 0 400 400">
+        <defs><linearGradient id="g1" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#8fb57a"/><stop offset="1" stop-color="#3f6b3a"/></linearGradient></defs>
+        <path fill="url(#g1)" d="M318 64c44 38 60 108 44 166s-64 102-122 112-124-16-158-64-36-124 2-172S274 26 318 64z"/>
+        <g transform="translate(200 230)">
+          <path d="M0 90V-20" stroke="#faf6ee" stroke-width="7" stroke-linecap="round"/>
+          <path d="M0 10C0-50 45-85 100-85 100-25 55 10 0 10z" fill="#e9b44c"/>
+          <path d="M0 40C0-10-38-40-90-40-90 10-52 40 0 40z" fill="#faf6ee"/>
+          <path d="M0 90c-40 0-70 10-90 30h180c-20-20-50-30-90-30z" fill="#8a4b2f"/>
+        </g>
+      </svg>
+      <div class="tag t1"><i>🌱</i> Huertas escolares</div>
+      <div class="tag t2"><i>💛</i> Bienestar emocional</div>
+      <div class="tag t3"><i>📚</i> Educación con sentido</div>
+    </div>
+  </div>
+</section>
+
+<div class="cinta"><div>
+  <span>Educación</span>·<span>Territorio</span>·<span>Cuidado</span>·<span>Arraigo</span>·<span>Comunidad</span>·<span>Semilla</span>·
+  <span>Educación</span>·<span>Territorio</span>·<span>Cuidado</span>·<span>Arraigo</span>·<span>Comunidad</span>·<span>Semilla</span>·
+</div></div>
+
+<!-- QUIÉNES SOMOS -->
+<section class="somos" id="somos">
+  <div class="cont">
+    <div class="fotos reveal">
+      <div class="foto" style="--g:linear-gradient(180deg,transparent 40%,rgba(63,107,58,.9))"><span>Taller de siembra · Vereda Fonquetá</span></div>
+      <div class="foto" style="--g:linear-gradient(180deg,transparent 40%,rgba(138,75,47,.9))"><span>Círculo de palabra · Jóvenes</span></div>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Quiénes somos</span>
+      <h2>Una semilla que germinó en Chía</h2>
+      <p class="lead">Nacimos en 2014 con una convicción sencilla: cuando una persona se siente vista, acompañada y conectada con su tierra, florece. Trabajamos de la mano de escuelas, familias y organizaciones locales para que el aprendizaje, el cuidado emocional y la economía solidaria crezcan juntos.</p>
+      <div class="valores">
+        <div class="valor"><i>🌾</i><div><b>Arraigo</b><p>Honramos los saberes del campo y la memoria del territorio.</p></div></div>
+        <div class="valor"><i>🤝</i><div><b>Cuidado mutuo</b><p>Construimos redes donde nadie camina solo.</p></div></div>
+        <div class="valor"><i>✨</i><div><b>Dignidad</b><p>Cada persona es protagonista de su propia historia.</p></div></div>
+        <div class="valor"><i>🔄</i><div><b>Sostenibilidad</b><p>Lo que sembramos debe durar más que nosotros.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMAS -->
+<section class="programas" id="programas">
+  <div class="cont">
+    <span class="eyebrow">Qué hacemos</span>
+    <h2>Cuatro raíces, un mismo propósito</h2>
+    <p class="lead">Nuestros programas se entrelazan para acompañar a las personas en todas las etapas de su crecimiento.</p>
+    <div class="prog-grid">
+      <article class="prog reveal" style="--c:#8fb57a"><div class="ico">🌱</div><h3>Semillero</h3><p>Huertas escolares, educación ambiental y soberanía alimentaria con niñas y niños de 5 a 12 años.</p><a href="#contacto">Saber más →</a></article>
+      <article class="prog reveal" style="--c:#e9b44c"><div class="ico">💛</div><h3>Alma</h3><p>Acompañamiento psicosocial, círculos de palabra y talleres de bienestar emocional para jóvenes y familias.</p><a href="#contacto">Saber más →</a></article>
+      <article class="prog reveal" style="--c:#c9875f"><div class="ico">🧺</div><h3>Raíz Productiva</h3><p>Formación en emprendimiento solidario y comercialización de productos de mujeres rurales y campesinas.</p><a href="#contacto">Saber más →</a></article>
+      <article class="prog reveal" style="--c:#6a1b9a"><div class="ico">💻</div><h3>Campo Conectado</h3><p>Alfabetización digital y herramientas TIC para que la ruralidad acceda a educación, mercados y servicios.</p><a href="#contacto">Saber más →</a></article>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACTO -->
+<section class="impacto" id="impacto">
+  <div class="cont">
+    <span class="eyebrow">Nuestro impacto</span>
+    <h2>Lo que hemos sembrado juntos</h2>
+    <div class="cifras">
+      <div class="cifra reveal"><b data-n="1200">0</b><span>niñas, niños y jóvenes acompañados</span></div>
+      <div class="cifra reveal"><b data-n="38">0</b><span>huertas escolares y comunitarias</span></div>
+      <div class="cifra reveal"><b data-n="140">0</b><span>mujeres en emprendimientos solidarios</span></div>
+      <div class="cifra reveal"><b data-n="11">0</b><span>años caminando con la comunidad</span></div>
+    </div>
+    <blockquote class="cita reveal">"En la huerta aprendí que las cosas buenas toman tiempo. Hoy mi mamá vende lo que sembramos y yo quiero estudiar agronomía."
+      <small>— Participante del programa Semillero, 14 años</small></blockquote>
+  </div>
+</section>
+
+<!-- COLOMBIA 5.0 -->
+<section class="col50">
+  <div class="cont">
+    <div class="caja reveal">
+      <div>
+        <span class="eyebrow">Próximamente · Bogotá 2026</span>
+        <h2>Nos encontramos en Colombia 5.0</h2>
+        <p>Participaremos en la Muestra Comercial <b>Café & Conexiones TIC</b> del Ministerio TIC para mostrar cómo la tecnología también puede echar raíces en el campo. Visítanos y conoce <b>Campo Conectado</b>.</p>
+        <a href="#contacto" class="btn">Agenda una reunión en el stand</a>
+      </div>
+      <ul class="stand">
+        <li>🥽 Recorrido en realidad virtual por nuestras huertas</li>
+        <li>📱 App de trazabilidad para productos campesinos</li>
+        <li>🤖 Asistente con IA para orientación agroecológica</li>
+        <li>☕ Café de origen de nuestras familias aliadas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PARTICIPA -->
+<section class="participa" id="participa">
+  <div class="cont">
+    <span class="eyebrow">Participa</span>
+    <h2>Hay muchas formas de sembrar</h2>
+    <p class="lead">Tu tiempo, tu aporte o tu empresa pueden convertirse en una nueva semilla.</p>
+    <div class="opciones">
+      <div class="op reveal"><div class="ico">🙋</div><h3>Voluntariado</h3><p>Acompaña talleres, huertas o procesos de formación los fines de semana en Chía y veredas aledañas.</p><a href="#contacto" class="btn ghost">Inscribirme</a></div>
+      <div class="op reveal"><div class="ico">🌻</div><h3>Donaciones</h3><p>Desde $20.000 al mes apadrinas el kit de huerta y acompañamiento de un niño o niña durante un semestre.</p><a href="#contacto" class="btn sol">Donar ahora</a></div>
+      <div class="op reveal"><div class="ico">🏢</div><h3>Alianzas</h3><p>Programas de responsabilidad social, voluntariado corporativo y compras solidarias con enfoque territorial.</p><a href="#contacto" class="btn ghost">Hablemos</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto" id="contacto">
+  <div class="cont">
+    <div class="reveal">
+      <span class="eyebrow">Contacto</span>
+      <h2>Escríbenos, te leemos con calma</h2>
+      <ul class="info">
+        <li><i>📍</i><span>Calle 12 # 2A-53, Int. 53<br>Chía, Cundinamarca</span></li>
+        <li><i>📞</i><span>(601) 885 1491 · 312 442 1923</span></li>
+        <li><i>✉️</i><span>jkgonzalezt@poli.edu.co</span></li>
+        <li><i>🕘</i><span>Lunes a viernes · 8:00 a.m. – 5:00 p.m.</span></li>
+      </ul>
+    </div>
+    <form class="reveal" onsubmit="event.preventDefault();this.reset();alert('¡Gracias! Pronto nos pondremos en contacto.')">
+      <div class="dos"><input placeholder="Nombre" required><input type="email" placeholder="Correo" required></div>
+      <select><option>Quiero ser voluntario/a</option><option>Quiero donar</option><option>Alianza empresarial</option><option>Colombia 5.0</option><option>Otro</option></select>
+      <textarea placeholder="Cuéntanos cómo quieres sembrar con nosotros"></textarea>
+      <button class="btn" type="submit">Enviar mensaje</button>
+      <small style="color:var(--gris)">Tratamos tus datos conforme a la Ley 1581 de 2012.</small>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="cont">
+    <div class="marca"><svg class="ico" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#f1e7d6"/><path d="M24 40V22" stroke="#3f6b3a" stroke-width="2.5" stroke-linecap="round"/><path d="M24 26c0-8 6-13 14-13 0 8-6 13-14 13z" fill="#8fb57a"/><path d="M24 30c0-7-5-11-12-11 0 7 5 11 12 11z" fill="#3f6b3a"/><circle cx="24" cy="12" r="3.5" fill="#e9b44c"/></svg><b>Alma y Semilla</b></div>
+    <div>Fundación Alma y Semilla · NIT 900.728.521-6 · Entidad sin ánimo de lucro · Chía, Cundinamarca, Colombia</div>
+    <div class="legal">© 2026 · Política de tratamiento de datos · Todos los derechos reservados</div>
+  </div>
+</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
+  const links=document.getElementById('links');
+  document.getElementById('burger').onclick=()=>links.classList.toggle('open');
+  links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting) return; e.target.classList.add('in'); io.unobserve(e.target);
+    e.target.querySelectorAll('[data-n]').forEach(cuenta);
+    if(e.target.dataset.n) cuenta(e.target);
+  }),{threshold:.2});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  function cuenta(el){const fin=+el.dataset.n,t0=performance.now();
+    (function f(t){const p=Math.min((t-t0)/1600,1);el.textContent=Math.round(fin*(1-Math.pow(1-p,3))).toLocaleString('es-CO')+(fin>=1000?'+':'');if(p<1)requestAnimationFrame(f)})(t0);}
+</script>
+</body>
+</html>
+```
+
+### Decisiones de diseño
+
+- **Paleta tierra / hoja / sol / crema**: transmite cercanía, naturaleza y calidez, evitando el look corporativo frío.
+- **Tipografía Fraunces + Nunito**: serif editorial humana para títulos, sans redonda y amable para el cuerpo.
+- **Formas orgánicas**: ilustración SVG de semilla germinando, bordes muy redondeados, secciones con esquinas curvas, cinta tipo marquesina con los valores.
+- **Narrativa de "sembrar/cosechar"** en toda la página, coherente con el nombre.
+- **Bloque Colombia 5.0** con la identidad morado/verde del evento, para aprovechar la participación en la muestra.
+- Animaciones suaves (aparición al hacer scroll, contadores) y diseño 100% responsive.
+
+### Qué debes personalizar
+Misión, programas (nombres y descripciones), cifras de impacto, testimonio y fotografías reales en los recuadros `.foto` (reemplaza el fondo por `background-image:url(...)`). Si me cuentas a qué se dedica realmente la fundación, ajusto los textos y la estructura.

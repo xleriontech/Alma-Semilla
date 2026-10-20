@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Tejido Digital: Repositorio Vivo de Saberes | Fundación Alma y Semilla</title>
+<meta name="description" content="Repositorio vivo de saberes ancestrales basado en arquitectura RAG: vectorización ética por nivel de acceso, trazabilidad y autoría colectiva (Convenio 169 OIT) e interfaz multimodal.">
+<meta name="keywords" content="IA RAG, repositorio de saberes, vectorización ética, pgvector, trazabilidad de fuentes, Convenio 169 OIT, etnotecnología, assistente etnográfico.">
+<meta name="theme-color" content="#143627">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="/repositorio.html">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CO">
+<meta property="og:site_name" content="Fundación Alma y Semilla">
+<meta property="og:title" content="El Tejido Digital: Repositorio Vivo de Saberes">
+<meta property="og:description" content="Más que un archivo, es un organismo de conocimiento vivo. Explora el grafo de saberes y consulta el asistente etnográfico.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&family=Nunito:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css?v=c66003a2">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+<!-- ==================================================================
+     BIBLIOTECA DE ICONOS (SVG inline · sin dependencias externas)
+     ================================================================== -->
+<svg class="svg-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-8"/><path d="M12 13c0-4 3-7 8-7 0 4-3 7-8 7z"/><path d="M12 16c0-3.5-2.5-6-6.5-6 0 3.5 2.5 6 6.5 6z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1l8.8 8.8 8.8-8.8a5 5 0 0 0 0-7.1z"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M5 13a10 10 0 0 1 14 0"/><path d="M2 9.5a15 15 0 0 1 20 0"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><path d="M6 1v3M10 1v3M14 1v3"/></symbol>
+  <symbol id="i-vr" viewBox="0 0 24 24"><path d="M2 9.5A2.5 2.5 0 0 1 4.5 7h15A2.5 2.5 0 0 1 22 9.5v5a2.5 2.5 0 0 1-2.5 2.5h-4l-3 3-3-3h-4A2.5 2.5 0 0 1 2 14.5z"/><circle cx="7.5" cy="12" r="1.4"/><circle cx="16.5" cy="12" r="1.4"/></symbol>
+  <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 22v-6"/><path d="M12 2 6 10h3l-4 5h5l-3 4h10l-3-4h5l-4-5h3z"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2.7 6.3 8.4a8 8 0 1 0 11.4 0z"/></symbol>
+  <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 2v6.5L3.6 18A2 2 0 0 0 5.3 21h13.4a2 2 0 0 0 1.7-3L15 8.5V2"/><path d="M8 2h8M7 15h10"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3z"/><path d="M14 14h3v3h-3zM18 18h3v3h-3zM20 14h1M14 20h1"/></symbol>
+  <symbol id="i-case" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-11.5A7 7 0 0 0 5 10.5C5 15.8 12 22 12 22z"/><circle cx="12" cy="10.5" r="2.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M12 3 1 9l11 6 9-4.91V17h2V9z"/><path d="M5 13.5V17c0 1.66 3.13 3 7 3s7-1.34 7-3v-3.5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 24 24"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2h-1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2H4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M8.2 13.1 7 22l5-3 5 3-1.2-8.9"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-4 0v5"/><path d="M14 10V4a2 2 0 0 0-4 0v6"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></symbol>
+  <symbol id="i-plant" viewBox="0 0 24 24"><path d="M5 12h14l-1.5 8h-11z"/><path d="M12 12c0-3 2-5 5-5 0 3-2 5-5 5zM12 12c0-2.5-1.5-4-4-4 0 2.5 1.5 4 4 4zM12 12V6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-nodo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.6"/><path d="M12 9.4V4M12 14.6V20M9.4 12H4M14.6 12H20"/><circle cx="12" cy="2.6" r="1.4"/><circle cx="12" cy="21.4" r="1.4"/><circle cx="2.6" cy="12" r="1.4"/><circle cx="21.4" cy="12" r="1.4"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+  <symbol id="i-branch" viewBox="0 0 24 24"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+  <symbol id="i-language" viewBox="0 0 24 24"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 12 5 5 5-5"/><path d="M4 21h16"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5"/><path d="M12 12v10"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 19c-4 1.5-4-2-6-2"/><path d="M15 21v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.4.4-.5.9-.5 1.5V21"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+  <symbol id="i-mountain" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+</svg>
+
+
+<div class="anuncio">
+  <div class="cont anuncio__inner">
+    <p class="anuncio__texto">
+      <span class="anuncio__badge">Colombia 5.0</span>
+      Nuestro <strong>Tejido Digital</strong> en la Muestra Comercial Café &amp; Conexiones TIC · Bogotá D.C.
+    </p>
+    <a class="anuncio__link" href="#demo">
+      Prueba el asistente
+      <svg class="ico ico--xs" aria-hidden="true"><use href="#i-arrow"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ==================================================================
+     NAVEGACIÓN
+     ================================================================== -->
+<header class="nav" id="nav">
+  <div class="cont nav__inner">
+    <a href="index.html" class="marca" aria-label="Fundación Alma y Semilla, ir al inicio">
+      <span class="marca__ico">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="31" fill="#143627"/>
+          <g fill="none" stroke="#e9b44c" stroke-width="1.6" stroke-linejoin="round" opacity=".75">
+            <path d="M32 4 60 32 32 60 4 32Z"/><path d="M32 14 50 32 32 50 14 32Z" opacity=".6"/>
+          </g>
+          <path d="M32 52V30" stroke="#faf6ee" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M32 34c0-7 5-12 13-12 0 7-5 12-13 12z" fill="#8fb57a"/>
+          <path d="M32 40c0-6-4.5-10-11-10 0 6 4.5 10 11 10z" fill="#3f6b3a"/>
+          <circle cx="32" cy="19" r="3.2" fill="#e9b44c"/>
+        </svg>
+      </span>
+      <span class="marca__txt">
+        <b>Alma y Semilla</b>
+        <small>Fundación · Chía</small>
+      </span>
+    </a>
+
+    <nav class="nav__links" id="links" aria-label="Menú principal">
+      <a href="index.html" data-page="inicio">Inicio</a>
+      <a href="objeto-social.html" data-page="objeto">Objeto Social</a>
+      <a href="index.html#enfoque" data-page="enfoque">Enfoque</a>
+      <a href="repositorio.html" data-page="repositorio" class="is-activo" aria-current="page">Repositorio</a>
+      <a href="transparencia.html" data-page="transparencia">Transparencia</a>
+      <a href="contacto.html" data-page="contacto">Contacto</a>
+      <a href="repositorio.html#demo" class="btn btn--esmeralda btn--sm nav__cta">Demo Asistente</a>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="links">
+      <svg class="ico burger__abrir" aria-hidden="true"><use href="#i-menu"/></svg>
+      <svg class="ico burger__cerrar" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+  </div>
+</header>
+
+
+<main id="contenido">
+
+  <!-- ================================================================
+       PORTADA
+       ================================================================ -->
+  <section class="portada">
+    <div class="portada__patron" aria-hidden="true"></div>
+    <div class="portada__glow" aria-hidden="true"></div>
+    <div class="cont">
+      <nav class="migas" aria-label="Ruta de navegación">
+        <a href="index.html">Inicio</a><span>/</span><span>Repositorio Vivo</span>
+      </nav>
+      <h1>El Tejido Digital: <em>Repositorio Vivo</em> de Saberes</h1>
+      <p class="portada__lead">
+        Más que un archivo, es un organismo de conocimiento vivo. A través de nuestra arquitectura de
+        Recuperación de Información Aumentada (RAG), alimentamos modelos de IA con textos, audios y
+        registros validados por las comunidades guardianas.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       CARACTERÍSTICAS DEL SISTEMA
+       ================================================================ -->
+  <section class="seccion seccion--oscura">
+    <div class="cont">
+      <div class="seccion__cabecera centro">
+        <span class="eyebrow">Características del sistema</span>
+        <h2>Tres decisiones de arquitectura que cambian todo</h2>
+        <p class="lead lead--clara">
+          Un sistema de IA que no sabe lo que no puede decir no sirve para preservar patrimonio.
+          Por eso la gobernanza del dato está en el núcleo, no en la documentación.
+        </p>
+      </div>
+
+      <div class="caracteristicas">
+        <article class="caracteristica reveal">
+          <span class="caracteristica__ico"><svg class="ico" aria-hidden="true"><use href="#i-database"/></svg></span>
+          <h3>Vectorización ética</h3>
+          <p>Los embeddings de los saberes se almacenan respetando los niveles de acceso
+             (público, restringido, sagrado). El metadato <code>nivel_acceso</code> viaja con cada
+             fragmento y gobierna la indexación.</p>
+          <div class="enfoque__tags" style="margin-top:16px">
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">nivel_acceso</span>
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">cpli_url</span>
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">comunidad</span>
+          </div>
+        </article>
+
+        <article class="caracteristica reveal">
+          <span class="caracteristica__ico"><svg class="ico" aria-hidden="true"><use href="#i-branch"/></svg></span>
+          <h3>Trazabilidad y autoría</h3>
+          <p>Cada respuesta generada por la IA cita su fuente comunitaria y geográfica, garantizando
+             el reconocimiento de la propiedad intelectual colectiva (Convenio 169 OIT).</p>
+          <div class="enfoque__tags" style="margin-top:16px">
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">citaciones</span>
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">geolocalización</span>
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">procedencia</span>
+          </div>
+        </article>
+
+        <article class="caracteristica reveal">
+          <span class="caracteristica__ico"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span>
+          <h3>Interfaz multimodal</h3>
+          <p>Acceso por voz, texto y exploración gráfica de nodos de conocimiento. El mismo registro
+             se consulta en la interfaz conversacional o se explora en el grafo.</p>
+          <div class="enfoque__tags" style="margin-top:16px">
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">voz</span>
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">texto</span>
+            <span class="enfoque__tag" style="background:rgba(16,185,129,.16);color:#6ee7b7">grafo</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       GRAFO DE NODOS DE CONOCIMIENTO
+       ================================================================ -->
+  <section class="seccion seccion--oscura" id="grafo" style="padding-top:0">
+    <div class="cont">
+      <div class="seccion__cabecera">
+        <span class="eyebrow">Exploración gráfica</span>
+        <h2>El tejido de los saberes</h2>
+        <p class="lead lead--clara">
+          Cada nodo es un registro del corpus. El color indica su nivel de acceso. Desactiva un nivel
+          para ver cómo el filtro de metadatos reconstruye latopología del conocimiento visible.
+        </p>
+      </div>
+
+      <div class="tejido reveal">
+        <div class="tejido__lienzo">
+          <canvas id="tejido-grafo" aria-label="Grafo interactivo de nodos de conocimiento"></canvas>
+          <span class="tejido__pista">Clic sobre un nodo para inspeccionar sus metadatos</span>
+        </div>
+        <aside class="tejido__filtros">
+          <h3>Nivel de acceso</h3>
+
+          <label class="filtro">
+            <input type="checkbox" data-nivel="publico" checked>
+            <span class="chip__punto" style="background:#10b981"></span>
+            Público
+            <span class="filtro__cont" data-conteo="publico">0</span>
+          </label>
+          <label class="filtro">
+            <input type="checkbox" data-nivel="restringido" checked>
+            <span class="chip__punto" style="background:#e9b44c"></span>
+            Restringido
+            <span class="filtro__cont" data-conteo="restringido">0</span>
+          </label>
+          <label class="filtro">
+            <input type="checkbox" data-nivel="sagrado" checked>
+            <span class="chip__punto" style="background:#a855f7"></span>
+            Sagrado
+            <span class="filtro__cont" data-conteo="sagrado">0</span>
+          </label>
+
+          <div class="tejido__detalle" id="nodo-detalle">
+            <strong>Selecciona un nodo</strong>
+            <p>Haz clic sobre cualquier nodo del tejido para inspeccionar sus metadatos de gobernanza:
+               comunidad, territorio, nivel de acceso y estado del CPLI.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       DEMO DEL ASISTENTE
+       ================================================================ -->
+  <section class="seccion" id="demo">
+    <div class="cont">
+      <div class="seccion__cabecera">
+        <span class="eyebrow">Demo interactiva</span>
+        <h2>Acceder a la Demo del Asistente Etnográfico</h2>
+        <p class="lead">
+          Consulta el corpus validado y observa cómo el sistema cita sus fuentes y cómo el perfil de
+          acceso determina qué puede responderse. Cambia el perfil en el panel lateral y repite la
+          consulta.
+        </p>
+      </div>
+
+      <div class="demo reveal">
+        <div class="demo__chat">
+          <div class="demo__head">
+            <span class="panel__live" style="color:#059669">
+              <span class="punto-latido" aria-hidden="true"></span>
+              Asistente Etnográfico
+            </span>
+            <span class="panel__chip" style="background:rgba(20,54,39,.08);color:#6b645b">RAG · k = 5 · pgvector</span>
+            <span class="panel__chip" style="background:rgba(20,54,39,.08);color:#6b645b">
+              Consultas registradas: <span id="rag-contador">0</span>
+            </span>
+          </div>
+
+          <div class="demo__log" id="rag-log" role="log" aria-live="polite">
+            <div class="msg msg--bot">
+              <div class="msg__texto">
+                Hola. Soy el asistente etnográfico de Alma y Semilla. Consulto el corpus de saberes
+                validados por comunidades guardianas y siempre cito mi fuente. ¿Qué te gustaría saber?
+              </div>
+            </div>
+          </div>
+
+          <form class="demo__form" id="rag-form">
+            <div class="demo__input">
+              <label class="sr-only" for="rag-entrada">Escribe tu consulta</label>
+              <input type="text" id="rag-entrada" placeholder="Pregunta sobre un saber, un territorio o una práctica…" autocomplete="off">
+              <button type="submit" class="btn btn--solido">
+                <svg class="ico ico--sm" aria-hidden="true"><use href="#i-send"/></svg>
+                Consultar
+              </button>
+            </div>
+            <div class="demo__ejemplos">
+              <button type="button" class="ejemplo" data-pregunta="¿Qué sabemos del cuidado de la huerta y el uso del agua?">Cuidado de la huerta</button>
+              <button type="button" class="ejemplo" data-pregunta="¿Cómo se usa la Mikania cordata como planta medicinal?">Plantas medicinales</button>
+              <button type="button" class="ejemplo" data-pregunta="¿Qué relatos orales y:topónimos se han documentado?">Relatos y:topónimos</button>
+              <button type="button" class="ejemplo" data-pregunta="¿En qué consiste el ritual del agua?">Ritual del agua</button>
+            </div>
+          </form>
+        </div>
+
+        <aside class="demo__aside">
+          <div>
+            <h3>Perfil de acceso</h3>
+            <p style="margin-top:10px">El perfil define qué niveles de acceso puede recuperar el asistente.</p>
+            <div class="perfil" style="margin-top:16px">
+              <div class="perfil__opcion is-activo" data-perfil="visitante" role="button" tabindex="0">
+                <b>Visitante</b>
+                <span>Solo registros públicos</span>
+              </div>
+              <div class="perfil__opcion" data-perfil="investigador" role="button" tabindex="0">
+                <b>Investigador acreditado</b>
+                <span>Público + restringido</span>
+              </div>
+              <div class="perfil__opcion" data-perfil="comunidad" role="button" tabindex="0">
+                <b>Comunidad guardiana</b>
+                <span>Todos los niveles, con CPLI</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3>Qué demuestra esta demo</h3>
+            <ul class="legal__lista" style="margin-top:14px">
+              <li><svg class="ico ico--sm" aria-hidden="true"><use href="#i-check"/></svg><span>Filtrado por metadatos <b>nivel_acceso</b> antes de generar</span></li>
+              <li><svg class="ico ico--sm" aria-hidden="true"><use href="#i-check"/></svg><span>Citación obligatoria de <b>comunidad y territorio</b></span></li>
+              <li><svg class="ico ico--sm" aria-hidden="true"><use href="#i-check"/></svg><span>Refusal documentada y <b>registro de la consulta</b></span></li>
+              <li><svg class="ico ico--sm" aria-hidden="true"><use href="#i-check"/></svg><span>Auditoría de acceso bajo el <b>Convenio 169 OIT</b></span></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <p class="nota-legal" style="margin-top:22px;font-size:13px;color:#6b645b;text-align:center">
+        Demostración funcional con corpus de ejemplo. En producción este componente se conecta al
+        servidor de Retrieval (LangChain / LlamaIndex sobre pgvector o Pinecone) described en la
+        arquitectura técnica.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       ARQUITECTURA TÉCNICA
+       ================================================================ -->
+  <section class="seccion seccion--arena">
+    <div class="cont">
+      <div class="seccion__cabecera">
+        <span class="eyebrow">Arquitectura técnica</span>
+        <h2>Cómo se construye el tejido</h2>
+        <p class="lead">
+          La implementación de referencia combina un backend RAG con filtrado de metadatos, un frontend
+          con renderizado de servidor y una visualización 3D del grafo de conocimiento.
+        </p>
+      </div>
+
+      <div class="lineas">
+        <article class="linea reveal">
+          <span class="linea__num">01</span>
+          <span class="linea__ico"><svg class="ico" aria-hidden="true"><use href="#i-database"/></svg></span>
+          <h3>Backend del repositorio</h3>
+          <p>LangChain o LlamaIndex con una base vectorial como Pinecone o pgvector (PostgreSQL). La
+             clave de diferenciación es el <b>filtrado por metadatos</b>: cada documento lleva un tag
+             <b>nivel_acceso</b> (publico, comunidad, sagrado) y la consulta se restringe antes de la
+             recuperación.</p>
+          <div class="enfoque__tags">
+            <span class="enfoque__tag">LangChain</span>
+            <span class="enfoque__tag">LlamaIndex</span>
+            <span class="enfoque__tag">pgvector</span>
+            <span class="enfoque__tag">Pinecone</span>
+          </div>
+        </article>
+
+        <article class="linea reveal">
+          <span class="linea__num">02</span>
+          <span class="linea__ico"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span>
+          <h3>Frontend y SEO</h3>
+          <p>Next.js o Nuxt.js con renderizado de servidor (SSR), excelente para posicionar la fundación
+             en búsquedas académicas y para que cada registro del corpus sea indexable de forma
+             independiente.</p>
+          <div class="enfoque__tags">
+            <span class="enfoque__tag">Next.js</span>
+            <span class="enfoque__tag">Nuxt.js</span>
+            <span class="enfoque__tag">SSR</span>
+            <span class="enfoque__tag">Schema.org</span>
+          </div>
+        </article>
+
+        <article class="linea reveal">
+          <span class="linea__num">03</span>
+          <span class="linea__ico"><svg class="ico" aria-hidden="true"><use href="#i-cube"/></svg></span>
+          <h3>Visualización 3D</h3>
+          <p>Three.js o React Three Fiber para crear una visualización interactiva de los nodos de
+             conocimiento: una red neuronal con la forma de un tejido ancestral. En esta versión se
+             resuelve con Canvas 2D, sin dependencias.</p>
+          <div class="enfoque__tags">
+            <span class="enfoque__tag">Three.js</span>
+            <span class="enfoque__tag">R3F</span>
+            <span class="enfoque__tag">WebGL</span>
+            <span class="enfoque__tag">Canvas 2D</span>
+          </div>
+        </article>
+
+        <article class="linea reveal">
+          <span class="linea__num">04</span>
+          <span class="linea__ico"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span>
+          <h3>Cumplimiento legal en el código</h3>
+          <p>El formulario de contacto exige la aceptación expresa de la política de tratamiento de
+             datos (Ley 1581 de 2012). El panel de administración permite adjuntar el <b>Acta de CPLI</b>
+             firmada, vinculada de forma inseparable al documento almacenado en la base de datos.</p>
+          <div class="enfoque__tags">
+            <span class="enfoque__tag">Ley 1581/2012</span>
+            <span class="enfoque__tag">Decreto 1377/2013</span>
+            <span class="enfoque__tag">Acta de CPLI</span>
+            <span class="enfoque__tag">ISO 9001</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       CTA
+       ================================================================ -->
+  <section class="seccion">
+    <div class="cont">
+      <div class="cta-banda reveal">
+        <span class="etiqueta etiqueta--sol">Corpus abierto</span>
+        <h2>¿Tienes un saber que debería estar aquí?</h2>
+        <p>
+          Si custodias un conocimiento y quieres que forme parte del tejido, conversemos sobre el
+          consentimiento, la forma de registro y los beneficios para tu comunidad.
+        </p>
+        <div class="cta-banda__botones">
+          <a href="contacto.html" class="btn btn--esmeralda">
+            <svg class="ico ico--sm" aria-hidden="true"><use href="#i-hand"/></svg>
+            Teje con nosotros
+          </a>
+          <a href="transparencia.html#cpli" class="btn btn--fantasma">
+            <svg class="ico ico--sm" aria-hidden="true"><use href="#i-lock"/></svg>
+            Política de privacidad de saberes
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================================================================
+     PIE DE PÁGINA
+     ================================================================== -->
+<footer class="pie">
+  <div class="cont">
+    <div class="pie__rejilla">
+      <div class="pie__col pie__col--marca">
+        <a href="index.html" class="marca marca--pie">
+          <span class="marca__ico">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="31" fill="#143627"/>
+              <g fill="none" stroke="#e9b44c" stroke-width="1.6" stroke-linejoin="round" opacity=".75">
+                <path d="M32 4 60 32 32 60 4 32Z"/><path d="M32 14 50 32 32 50 14 32Z" opacity=".6"/>
+              </g>
+              <path d="M32 52V30" stroke="#faf6ee" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M32 34c0-7 5-12 13-12 0 7-5 12-13 12z" fill="#8fb57a"/>
+              <path d="M32 40c0-6-4.5-10-11-10 0 6 4.5 10 11 10z" fill="#3f6b3a"/>
+              <circle cx="32" cy="19" r="3.2" fill="#e9b44c"/>
+            </svg>
+          </span>
+          <span class="marca__txt"><b>Alma y Semilla</b><small>Fundación Agro-TIC</small></span>
+        </a>
+        <p>Entidad sin ánimo de lucro dedicada a la investigación, preservación y difusión de saberes
+           ancestrales, ecológicos y médicos mediante tecnologías de la Cuarta Revolución Industrial.</p>
+        <span class="pie__distintivo">
+          <svg class="ico ico--xs" aria-hidden="true"><use href="#i-award"/></svg>
+          Participante oficial Colombia 5.0 · MinTIC
+        </span>
+      </div>
+
+      <div class="pie__col">
+        <h4>Transparencia</h4>
+        <ul class="pie__enlaces">
+          <li><a href="transparencia.html#marco">Marco normativo</a></li>
+          <li><a href="transparencia.html#cpli">Política de privacidad de saberes</a></li>
+          <li><a href="transparencia.html#documentos">Estatutos y documentos</a></li>
+          <li><a href="transparencia.html#registro">Datos registrales</a></li>
+          <li><a href="objeto-social.html">Líneas de investigación</a></li>
+        </ul>
+      </div>
+
+      <div class="pie__col">
+        <h4>Sede y contacto</h4>
+        <ul class="pie__contacto">
+          <li>
+            <svg class="ico ico--sm" aria-hidden="true"><use href="#i-pin"/></svg>
+            <span>Chía, Cundinamarca — Colombia</span>
+          </li>
+          <li>
+            <svg class="ico ico--sm" aria-hidden="true"><use href="#i-mail"/></svg>
+            <span><a href="mailto:contacto@almaysemilla.org">contacto@almaysemilla.org</a></span>
+          </li>
+          <li>
+            <svg class="ico ico--sm" aria-hidden="true"><use href="#i-phone"/></svg>
+            <span><a href="tel:+573124421923">+57 312 442 1923</a><br><a href="tel:+576018851491">(601) 885 1491</a></span>
+          </li>
+          <li>
+            <svg class="ico ico--sm" aria-hidden="true"><use href="#i-clock"/></svg>
+            <span>Lun – Vie · 8:00 a. m. – 5:00 p. m.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pie__col">
+        <h4>Conéctate a nuestra red</h4>
+        <p class="pie__texto">Recibe reportes de investigación, memorias de Colombia 5.0 y convocatorias de las líneas de acción.</p>
+        <form class="boletin" id="form-boletin" novalidate>
+          <label class="sr-only" for="boletin-correo">Tu correo electrónico</label>
+          <input type="email" id="boletin-correo" name="correo" placeholder="tu@correo.com" required>
+          <button type="submit" class="btn btn--esmeralda btn--sm">Unirme</button>
+        </form>
+        <p class="pie__aviso" id="boletin-aviso" role="status" hidden></p>
+      </div>
+    </div>
+
+    <div class="pie__barra">
+      <p>© 2014 – <span id="anio">2026</span> Fundación Alma y Semilla. Todos los derechos reservados.</p>
+      <p>Cumplimiento Ley 1581 de 2012 (Protección de Datos Personales) · Convenio 169 OIT · Participante oficial Colombia 5.0</p>
+    </div>
+  </div>
+</footer>
+
+<button class="subir" id="subir" aria-label="Volver arriba" hidden>
+  <svg class="ico" aria-hidden="true"><use href="#i-up"/></svg>
+</button>
+
+
+<script src="assets/js/main.js?v=e1078495" defer></script>
+<script src="assets/js/tejido.js?v=a1272898" defer></script>
+</body>
+</html>

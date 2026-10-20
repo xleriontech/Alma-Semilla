@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">
+  <!-- Motivo geométrico escalonado: rombos concéntricos que embaldosan sin costura -->
+  <g fill="none" stroke="#e9b44c" stroke-width="1.1" stroke-linejoin="round">
+    <path d="M40 0 80 40 40 80 0 40Z"/>
+    <path d="M40 14 66 40 40 66 14 40Z" opacity=".62"/>
+    <path d="M40 27 53 40 40 53 27 40Z" opacity=".38"/>
+  </g>
+</svg>

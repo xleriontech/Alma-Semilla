@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# La IA conversacional no aporta nada al posicionamiento de este sitio.
+# Se mantiene abierta la indexación del repositorio vivo de saberes.
+
+Sitemap: /sitemap.xml

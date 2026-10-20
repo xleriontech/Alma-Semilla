@@ -1,0 +1,13 @@
+# Normaliza los finales de línea a LF en el repositorio.
+# Importante: Cloudflare Pages compila en Linux, donde LF es obligatorio.
+* text=auto eol=lf
+
+# Archivos binarios: no se tocan
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
