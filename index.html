@@ -22,10 +22,68 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&family=Nunito:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=c66003a2">
+<link rel="stylesheet" href="assets/css/styles.css?v=409f4280">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
+
+<!-- ==================================================================
+     CARGADOR · LA PLANTA QUE CRECE
+     ================================================================== -->
+<div class="preloader" id="preloader" role="status" aria-live="polite">
+  <span class="sr-only">Cargando el sitio de la Fundación Alma y Semilla.</span>
+
+  <div class="preloader__marca">
+    <div class="preloader__planta">
+      <svg class="planta" viewBox="0 0 140 190" aria-hidden="true" focusable="false">
+        <!-- suelo -->
+        <path class="p-suelo" d="M16 170 Q70 159 124 170" pathLength="1"/>
+
+        <!-- semilla en la tierra -->
+        <ellipse class="p-brote" cx="70" cy="164" rx="8" ry="6"/>
+
+        <!-- raíces -->
+        <g class="p-raices">
+          <path class="p-raiz" d="M70 166 q-5 12 -18 17" pathLength="1"/>
+          <path class="p-raiz" d="M70 166 q0 13 1 18" pathLength="1"/>
+          <path class="p-raiz" d="M70 166 q5 12 18 17" pathLength="1"/>
+        </g>
+
+        <!-- tallo -->
+        <path class="p-tallo" d="M70 168 C68 142 72 116 70 64" pathLength="1"/>
+
+        <!-- hojas -->
+        <path class="p-hoja p-hoja--izq" d="M70 136 C48 136 35 117 33 95 C57 95 70 113 70 136 Z"/>
+        <path class="p-hoja p-hoja--der" d="M70 110 C92 110 105 94 107 71 C83 71 70 90 70 110 Z"/>
+
+        <!-- flor: rombos del tejido institucional -->
+        <g class="p-flor">
+          <path d="M70 6 L96 32 L70 58 L44 32 Z"/>
+          <path d="M70 18 L84 32 L70 46 L56 32 Z"/>
+        </g>
+
+        <!-- semilla de oro -->
+        <circle class="p-semilla" cx="70" cy="32" r="5"/>
+      </svg>
+    </div>
+
+    <p class="preloader__nombre">Alma y Semilla</p>
+    <p class="preloader__lema">Etnotecnología y Saberes Ancestrales 5.0</p>
+
+    <div class="preloader__progreso">
+      <span class="preloader__barra" id="preloader-barra"></span>
+    </div>
+    <span class="preloader__pct" id="preloader-pct">0&nbsp;%</span>
+  </div>
+</div>
+
+<!-- ==================================================================
+     BARRA DE PROGRESO DE LECTURA
+     ================================================================== -->
+<div class="progreso-lectura" aria-hidden="true">
+  <span class="progreso-lectura__pista" id="progreso-lectura"></span>
+</div>
+
 
 <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
 
@@ -131,6 +189,7 @@
       <a href="index.html" data-page="inicio" class="is-activo" aria-current="page">Inicio</a>
       <a href="objeto-social.html" data-page="objeto">Objeto Social</a>
       <a href="index.html#enfoque" data-page="enfoque">Enfoque</a>
+      <a href="index.html#impacto" data-page="impacto">Impacto</a>
       <a href="repositorio.html" data-page="repositorio">Repositorio</a>
       <a href="transparencia.html" data-page="transparencia">Transparencia</a>
       <a href="contacto.html" data-page="contacto">Contacto</a>
@@ -150,7 +209,7 @@
   <!-- ================================================================
        HERO
        ================================================================ -->
-  <section class="hero" id="inicio">
+  <section class="hero transicion-seccion" id="inicio">
     <div class="hero__patron" aria-hidden="true"></div>
     <canvas class="hero__tejido" id="tejido-hero" aria-hidden="true"></canvas>
 
@@ -235,7 +294,7 @@
   <!-- ================================================================
        QUIÉNES SOMOS
        ================================================================ -->
-  <section class="seccion" id="nosotros">
+  <section class="seccion transicion-seccion" id="nosotros">
     <div class="cont esencia__grid">
       <div class="esencia__visual reveal">
         <figure class="foto foto--a">
@@ -280,7 +339,7 @@
   <!-- ================================================================
        ENFOQUE · ETNOTECNOLOGÍA 5.0
        ================================================================ -->
-  <section class="seccion seccion--arena" id="enfoque">
+  <section class="seccion transicion-seccion seccion--arena" id="enfoque">
     <div class="cont">
       <div class="seccion__cabecera">
         <span class="eyebrow">Nuestro enfoque</span>
@@ -338,7 +397,7 @@
   <!-- ================================================================
        LÍNEAS DE ACCIÓN (vista previa)
        ================================================================ -->
-  <section class="seccion">
+  <section class="seccion transicion-seccion" id="programas">
     <div class="cont">
       <div class="seccion__cabecera">
         <span class="eyebrow">Objeto social</span>
@@ -398,9 +457,93 @@
   </section>
 
   <!-- ================================================================
+       IMPACTO · CIFRAS Y CALCULADORA
+       ================================================================ -->
+  <section class="seccion transicion-seccion seccion--arena" id="impacto">
+    <div class="cont">
+      <div class="seccion__cabecera centro">
+        <span class="eyebrow">Nuestro impacto</span>
+        <h2>Lo que hemos sembrado juntos</h2>
+      </div>
+
+      <div class="cifras">
+        <div class="cifra reveal"><b data-n="1200">1.200+</b><span>niñas, niños y jóvenes acompañados</span></div>
+        <div class="cifra reveal"><b data-n="38">38</b><span>huertas escolares y comunitarias</span></div>
+        <div class="cifra reveal"><b data-n="140">140</b><span>mujeres en emprendimientos solidarios</span></div>
+        <div class="cifra reveal"><b data-n="12">12</b><span>años caminando con la comunidad</span></div>
+      </div>
+
+      <blockquote class="testimonio reveal">
+        <svg class="ico icono-testimonio" aria-hidden="true"><use href="#i-quote"/></svg>
+        <p>En la huerta aprendí que las cosas buenas toman tiempo. Hoy mi mamá vende lo que sembramos y yo quiero estudiar agronomía.</p>
+        <cite>— Participante del programa Semillero, 14 años</cite>
+      </blockquote>
+
+      <div class="calculadora reveal" id="calculadora">
+        <div class="calculadora__cabecera">
+          <span class="etiqueta etiqueta--verde">Transparencia y acción</span>
+          <h3>Simula el impacto de tu alianza o donación</h3>
+          <p>Como entidad sin ánimo de lucro (ESAL), cada aporte de empresas aliadas o ciudadanos se transforma
+             directamente en infraestructura tecnológica y bienestar campesino.</p>
+        </div>
+
+        <div class="calculadora__cuerpo">
+          <div class="calculadora__control">
+            <div class="calculadora__rango">
+              <span class="calculadora__label">Aporte mensual o corporativo (COP)</span>
+              <output id="impacto-monto" for="impacto-slider">$500.000</output>
+            </div>
+            <label class="sr-only" for="impacto-slider">Monto del aporte en pesos colombianos</label>
+            <input type="range" id="impacto-slider" min="100000" max="5000000" step="50000" value="500000">
+            <div class="calculadora__escala"><span>$100 mil</span><span>$2,5 millones</span><span>$5 millones</span></div>
+            <div class="calculadora__atajos">
+              <span>Atajos:</span>
+              <button type="button" class="atajo" data-monto="200000">$200 mil</button>
+              <button type="button" class="atajo" data-monto="500000">$500 mil</button>
+              <button type="button" class="atajo" data-monto="1000000">$1 millón</button>
+              <button type="button" class="atajo" data-monto="2500000">$2,5 M</button>
+            </div>
+          </div>
+
+          <div class="calculadora__resultados">
+            <article class="resultado">
+              <svg class="ico resultado__ico" aria-hidden="true"><use href="#i-chip"/></svg>
+              <b id="imp-sensores">2 Kits</b>
+              <span>Sensores de humedad y clima instalados</span>
+            </article>
+            <article class="resultado">
+              <svg class="ico resultado__ico resultado__ico--terracota" aria-hidden="true"><use href="#i-cap"/></svg>
+              <b id="imp-mujeres">5 Mujeres</b>
+              <span>Capacitadas en alfabetización digital y barismo</span>
+            </article>
+            <article class="resultado">
+              <svg class="ico resultado__ico resultado__ico--sol" aria-hidden="true"><use href="#i-tree"/></svg>
+              <b id="imp-arboles">25 Árboles</b>
+              <span>Nativos sembrados para sombrío de cafetales</span>
+            </article>
+            <article class="resultado">
+              <svg class="ico resultado__ico resultado__ico--verde" aria-hidden="true"><use href="#i-plant"/></svg>
+              <b id="imp-huertas">4 Huertas</b>
+              <span>Escuelas y fincas con huerto educativo</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="calculadora__pie">
+          <a href="contacto.html" class="btn btn--terracota">
+            <svg class="ico ico--sm" aria-hidden="true"><use href="#i-send"/></svg>
+            Quiero ser aliado · Solicitar certificado de donación
+          </a>
+          <p>Entregamos certificado de donación y reporte de impacto trimestral a cada aliado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================
        REPOSITORIO (aviso)
        ================================================================ -->
-  <section class="seccion seccion--oscura">
+  <section class="seccion transicion-seccion seccion--oscura" id="repositorio">
     <div class="cont">
       <div class="seccion__cabecera centro">
         <span class="eyebrow">El Tejido Digital</span>
@@ -441,7 +584,7 @@
   <!-- ================================================================
        CTA
        ================================================================ -->
-  <section class="seccion">
+  <section class="seccion transicion-seccion" id="participa">
     <div class="cont">
       <div class="cta-banda reveal">
         <span class="etiqueta etiqueta--sol">Convocatoria abierta</span>
@@ -553,7 +696,7 @@
 </button>
 
 
-<script src="assets/js/main.js?v=6ad9ea56" defer></script>
+<script src="assets/js/main.js?v=bbac3b19" defer></script>
 <script src="assets/js/tejido.js?v=a1272898" defer></script>
 </body>
 </html>

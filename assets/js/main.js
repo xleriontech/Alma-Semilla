@@ -4,11 +4,15 @@
    ------------------------------------------------------------------
    1. Utilidades
    2. Navegación (sombra + menú móvil)
-   3. Aparición al hacer scroll
-   4. Contadores de cifras
-   5. Formularios
-   6. Botón "volver arriba"
-   7. Año en el pie de página
+   3. Cargador: la planta que crece
+   4. Aparición al hacer scroll
+   5. Contadores de cifras
+   6. Transiciones entre secciones y scroll spy
+   7. Barra de progreso de lectura
+   8. Imágenes con respaldo
+   9. Formularios
+  10. Botón "volver arriba"
+  11. Año en el pie de página
    ================================================================== */
 
 (function () {
@@ -17,8 +21,11 @@
   /* -----------------------------------------------------------
      1. UTILIDADES
      ----------------------------------------------------------- */
-  const $  = (sel, ctx) => (ctx || document).querySelector(sel);
-  const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
+  const $  = (s, c) => (c || document).querySelector(s);
+  const $$ = (s, c) => Array.from((c || document).querySelectorAll(s));
+
+  const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const respalda = (sel) => (sel ? sel.querySelectorAll(sel) : []);
 
   /* -----------------------------------------------------------
      2. NAVEGACIÓN
@@ -61,7 +68,80 @@
   }
 
   /* -----------------------------------------------------------
-     3. APARICIÓN AL HACER SCROLL
+     3. CARGADOR · LA PLANTA QUE CRECE
+     El crecimiento va ligado al progreso real de la carga: cada
+     variable CSS se calcula a partir de un único valor --c.
+     ----------------------------------------------------------- */
+  function iniciarCargador() {
+    const preloader = $('#preloader');
+    if (!preloader) return;
+
+    const barra = $('#preloader-barra');
+    const pct = $('#preloader-pct');
+
+    let progreso = 0;
+    let descargado = false;
+    let terminado = false;
+
+    // Recorta el progreso entre dos tramos: (c - a) / (b - a) acotado a 0..1
+    const tramo = (c, a, b) => Math.max(0, Math.min(1, (c - a) / (b - a)));
+
+    function pintar() {
+      preloader.style.setProperty('--c', progreso.toFixed(4));
+      preloader.style.setProperty('--suelo', tramo(progreso, 0, 0.10).toFixed(4));
+      preloader.style.setProperty('--brote', tramo(progreso, 0.03, 0.14).toFixed(4));
+      preloader.style.setProperty('--tallo', tramo(progreso, 0.10, 0.62).toFixed(4));
+      preloader.style.setProperty('--raiz', tramo(progreso, 0.04, 0.34).toFixed(4));
+      preloader.style.setProperty('--hojaI', tramo(progreso, 0.44, 0.70).toFixed(4));
+      preloader.style.setProperty('--hojaD', tramo(progreso, 0.54, 0.80).toFixed(4));
+      preloader.style.setProperty('--flor', tramo(progreso, 0.70, 0.94).toFixed(4));
+      preloader.style.setProperty('--semilla', tramo(progreso, 0.86, 1).toFixed(4));
+      if (barra) barra.style.width = (progreso * 100).toFixed(1) + '%';
+      if (pct) pct.textContent = Math.round(progreso * 100) + ' %';
+    }
+
+    // Avance asintótico: la planta crece mientras se descarga la página
+    const inicio = performance.now();
+    function tic() {
+      if (descargado || terminado) return;
+      const t = (performance.now() - inicio) / 1000;
+      const virtual = 0.92 * (1 - Math.exp(-t * 1.15));
+      if (virtual > progreso) { progreso = virtual; pintar(); }
+      requestAnimationFrame(tic);
+    }
+    requestAnimationFrame(tic);
+
+    function finalizar() {
+      if (terminado) return;
+      terminado = true;
+      progreso = 1;
+      pintar();
+
+      // Margen para que la planta termine de abrirse
+      const espera = reducirMovimiento ? 120 : 700;
+      window.setTimeout(() => {
+        preloader.classList.add('is-listo');
+        document.body.classList.add('sitio-listo');
+        window.setTimeout(() => {
+          if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+        }, 800);
+      }, espera);
+    }
+
+    if (document.readyState === 'complete') {
+      window.setTimeout(finalizar, 650);
+    } else {
+      window.addEventListener('load', () => window.setTimeout(finalizar, 250));
+    }
+
+    // Red de seguridad: el cargador nunca bloquea el sitio
+    window.setTimeout(finalizar, 8000);
+  }
+
+  iniciarCargador();
+
+  /* -----------------------------------------------------------
+     4. APARICIÓN AL HACER SCROLL
      ----------------------------------------------------------- */
   const reveals = $$('.reveal');
   if ('IntersectionObserver' in window) {
@@ -78,7 +158,7 @@
   }
 
   /* -----------------------------------------------------------
-     4. CONTADORES DE CIFRAS
+     5. CONTADORES DE CIFRAS
      ----------------------------------------------------------- */
   function animarContador(el) {
     const fin = Number(el.dataset.n) || 0;
@@ -112,19 +192,171 @@
   }
 
   /* -----------------------------------------------------------
-     4b. IMÁGENES CON FALLBACK
+     6. TRANSICIONES ENTRE SECCIONES
+     ----------------------------------------------------------- */
+  function iniciarTransiciones() {
+    // --- Entrada progresiva de las secciones ---
+    const secciones = $$('.transicion-seccion');
+    if ('IntersectionObserver' in window && secciones.length) {
+      const obs = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ha-entrado');
+          obs.unobserve(e.target);
+        });
+      }, { threshold: 0.06, rootMargin: '0px 0px -6% 0px' });
+      secciones.forEach((s) => obs.observe(s));
+    } else {
+      secciones.forEach((s) => s.classList.add('ha-entrado'));
+    }
+
+    // --- Enlaces del menú que apuntan a un ancla de esta misma página ---
+    const paginaActual = location.pathname.split('/').pop() || 'index.html';
+    const enlaces = $$('.nav__links a[href*="#"]');
+
+    const pares = enlaces
+      .map((a) => {
+        const href = a.getAttribute('href') || '';
+        const id = href.split('#')[1];
+        if (!id) return null;
+        const pagina = href.split('#')[0];
+        // Solo los que apuntan a esta misma página
+        if (pagina && pagina !== paginaActual) return null;
+        const destino = document.getElementById(id);
+        return destino ? { enlace: a, destino: destino } : null;
+      })
+      .filter(Boolean);
+
+    // --- Clic: desplazamiento suave + destello + foco accesible ---
+    pares.forEach(({ enlace, destino }) => {
+      enlace.addEventListener('click', (ev) => {
+        ev.preventDefault();
+
+        $$('.nav__links a').forEach((x) => x.classList.remove('pulsado'));
+        enlace.classList.add('pulsado');
+        window.setTimeout(() => enlace.classList.remove('pulsado'), 1400);
+
+        destino.scrollIntoView({
+          behavior: reducirMovimiento ? 'auto' : 'smooth',
+          block: 'start'
+        });
+
+        if (history.pushState) history.pushState(null, '', '#' + destino.id);
+
+        // El foco viaja a la sección para que el teclado no se quede atrás
+        destino.setAttribute('tabindex', '-1');
+        window.setTimeout(() => {
+          try { destino.focus({ preventScroll: true }); } catch (e) { destino.focus(); }
+        }, reducirMovimiento ? 0 : 700);
+
+        // Destello visual en el borde superior de la sección
+        destino.classList.remove('destacada');
+        void destino.offsetWidth;
+        destino.classList.add('destacada');
+      });
+    });
+
+    // --- Scroll spy: marca la sección actual en el menú ---
+    if ('IntersectionObserver' in window && pares.length) {
+      const obsSpy = new IntersectionObserver((entradas) => {
+        entradas.forEach((e) => {
+          if (!e.isIntersecting) return;
+          pares.forEach((p) => p.enlace.classList.remove('es-activo'));
+          const par = pares.find((p) => p.destino === e.target);
+          if (par) par.enlace.classList.add('es-activo');
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      pares.forEach((p) => obsSpy.observe(p.destino));
+    }
+  }
+
+  iniciarTransiciones();
+
+  /* -----------------------------------------------------------
+     7. BARRA DE PROGRESO DE LECTURA
+     ----------------------------------------------------------- */
+  const pista = $('#progreso-lectura');
+  if (pista) {
+    let pendiente = false;
+    function pintarProgreso() {
+      const alto = document.documentElement.scrollHeight - window.innerHeight;
+      const p = alto > 0 ? Math.min(1, Math.max(0, window.scrollY / alto)) : 0;
+      pista.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      pendiente = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(pintarProgreso);
+    }, { passive: true });
+    window.addEventListener('resize', pintarProgreso);
+    pintarProgreso();
+  }
+
+  /* -----------------------------------------------------------
+     8. IMÁGENES CON RESPALDO
      Si una imagen no carga, se retira para no dejar un hueco roto.
      Se hace con listener (y no con onerror inline) para poder
      mantener una CSP estricta sin 'unsafe-inline'.
      ----------------------------------------------------------- */
-  $$('img').forEach(function (img) {
-    img.addEventListener('error', function () {
+  $$('img').forEach((img) => {
+    img.addEventListener('error', () => {
       if (img.parentNode) img.parentNode.removeChild(img);
     });
   });
 
   /* -----------------------------------------------------------
-     5. FORMULARIOS
+     9. CALCULADORA DE IMPACTO
+     ----------------------------------------------------------- */
+  const sliderImpacto = $('#impacto-slider');
+  const montoImpacto = $('#impacto-monto');
+
+  function actualizarImpacto() {
+    if (!sliderImpacto) return;
+    const val = Number(sliderImpacto.value);
+
+    // Relleno visual del control
+    const pct = ((val - Number(sliderImpacto.min)) /
+      (Number(sliderImpacto.max) - Number(sliderImpacto.min))) * 100;
+    sliderImpacto.style.setProperty('--pct', pct + '%');
+
+    if (montoImpacto) montoImpacto.textContent = '$' + val.toLocaleString('es-CO');
+
+    const sensores = Math.max(1, Math.floor(val / 250000));
+    const mujeres = Math.max(1, Math.floor(val / 100000));
+    const arboles = Math.max(5, Math.floor(val / 20000));
+    const huertas = Math.max(1, Math.floor(val / 125000));
+
+    const set = (id, n, singular, plural) => {
+      const el = $(id);
+      if (el) el.textContent = n + ' ' + (n === 1 ? singular : plural);
+    };
+    set('#imp-sensores', sensores, 'Kit', 'Kits');
+    set('#imp-mujeres', mujeres, 'Mujer', 'Mujeres');
+    set('#imp-arboles', arboles, 'Árbol', 'Árboles');
+    set('#imp-huertas', huertas, 'Huerta', 'Huertas');
+
+    // Resalta el atajo activo
+    $$('.atajo').forEach((b) => {
+      b.classList.toggle('is-activo', Number(b.dataset.monto) === val);
+    });
+  }
+
+  if (sliderImpacto) {
+    sliderImpacto.addEventListener('input', actualizarImpacto);
+    actualizarImpacto();
+  }
+
+  $$('.atajo').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!sliderImpacto) return;
+      sliderImpacto.value = btn.dataset.monto;
+      actualizarImpacto();
+    });
+  });
+
+  /* -----------------------------------------------------------
+     10. FORMULARIOS
      ----------------------------------------------------------- */
   function validarCorreo(v) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -179,7 +411,7 @@
   }
 
   /* -----------------------------------------------------------
-     6. BOTÓN "VOLVER ARRIBA"
+     11. BOTÓN "VOLVER ARRIBA"
      ----------------------------------------------------------- */
   const btnSubir = $('#subir');
 
@@ -194,7 +426,7 @@
   }
 
   /* -----------------------------------------------------------
-     7. AÑO EN EL PIE DE PÁGINA
+     12. AÑO EN EL PIE DE PÁGINA
      ----------------------------------------------------------- */
   const anio = $('#anio');
   if (anio) anio.textContent = new Date().getFullYear();
