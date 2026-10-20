@@ -262,6 +262,24 @@ La demo del repositorio es funcional pero opera sobre un corpus de ejemplo. Para
 
 ---
 
+### Accesibilidad: auditoría de contraste
+
+El sitio cumple el mínimo **WCAG AA**: 4,5:1 para texto normal y 3:1 para texto grande.
+
+Para comprobarlo (no forma parte del despliegue, no requiere nada en Cloudflare):
+
+```bash
+npm i -D playwright
+npx playwright install chromium
+node tools/auditar-contraste.mjs
+```
+
+El script recorre las cinco páginas, calcula el color de fondo efectivo de cada texto —incluidos
+los degradados del hero y de los paneles— y lista los que no llegan al mínimo. Actualmente
+devuelve **0 incumplimiento** en las cinco páginas.
+
+---
+
 ## Paleta y tipografía
 
 Custom properties en `assets/css/styles.css` (bloque `:root`):

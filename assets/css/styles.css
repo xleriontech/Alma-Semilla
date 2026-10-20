@@ -34,7 +34,7 @@
   --esmeralda-osc: #059669;
   --violeta:       #6a1b9a;
   --violeta-cl:    #a855f7;
-  --terracota:     #c85a32;
+  --terracota:     #b8502c;
 
   /* Neutros */
   --crema:         #faf6ee;
@@ -187,6 +187,7 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   text-transform: uppercase;
 }
 .etiqueta--verde      { background: rgba(16, 185, 129, .16); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, .35); }
+.etiqueta--esmeralda   { background: rgba(16, 185, 129, .13); color: #047857; border: 1px solid rgba(16, 185, 129, .35); }
 .etiqueta--violeta    { background: var(--violeta); color: #f3e8ff; }
 .etiqueta--violeta-cl { background: #ede9fe; color: #6a1b9a; }
 .etiqueta--sol        { background: rgba(233, 180, 76, .16); color: var(--sol); border: 1px solid rgba(233, 180, 76, .35); }
@@ -200,9 +201,9 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   text-transform: uppercase; white-space: nowrap;
 }
 .chip__punto { width: 7px; height: 7px; border-radius: 50%; flex: none; }
-.chip--publico     { background: rgba(16, 185, 129, .13); color: var(--esmeralda-osc); }
+.chip--publico     { background: rgba(16, 185, 129, .13); color: #047857; }
 .chip--publico     .chip__punto { background: var(--esmeralda); }
-.chip--restringido { background: rgba(233, 180, 76, .16); color: #9a6b12; }
+.chip--restringido { background: rgba(233, 180, 76, .2); color: #7d5407; }
 .chip--restringido .chip__punto { background: var(--sol); }
 .chip--sagrado     { background: rgba(168, 85, 247, .14); color: #6b21a8; }
 .chip--sagrado     .chip__punto { background: var(--violeta-cl); }
@@ -238,13 +239,28 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
 .btn--sol:hover { background: var(--sol-osc); border-color: var(--sol-osc); }
 
 .btn--terracota { background: var(--terracota); color: #fff; border-color: var(--terracota); box-shadow: 0 16px 34px rgba(200, 90, 50, .28); }
-.btn--terracota:hover { background: #b04a26; border-color: #b04a26; }
+.btn--terracota:hover { background: #9d4423; border-color: #9d4423; }
 
 .btn--fantasma  { background: transparent; color: var(--hoja); border-color: var(--linea); }
 .btn--fantasma:hover { background: var(--hoja); color: #fff; border-color: var(--hoja); }
 
-.seccion--oscura .btn--fantasma { color: var(--crema); border-color: rgba(255, 255, 255, .32); background: rgba(255, 255, 255, .08); }
-.seccion--oscura .btn--fantasma:hover { background: var(--crema); color: var(--bosque); border-color: var(--crema); }
+/* Superficies oscuras: el botón fantasma necesita texto claro */
+.seccion--oscura .btn--fantasma,
+.col50 .btn--fantasma,
+.cta-banda .btn--fantasma,
+.aviso-cpli .btn--fantasma,
+.portada .btn--fantasma {
+  color: var(--crema);
+  border-color: rgba(255, 255, 255, .42);
+  background: rgba(255, 255, 255, .1);
+}
+.seccion--oscura .btn--fantasma:hover,
+.col50 .btn--fantasma:hover,
+.cta-banda .btn--fantasma:hover,
+.aviso-cpli .btn--fantasma:hover,
+.portada .btn--fantasma:hover {
+  background: var(--crema); color: var(--bosque); border-color: var(--crema);
+}
 
 .btn--sm { padding: 11px 22px; font-size: 14px; }
 .btn--bloque { width: 100%; }
@@ -408,6 +424,7 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   font-size: 11px; font-weight: 700; color: rgba(255, 255, 255, .72);
   background: rgba(0, 0, 0, .3); padding: 5px 12px; border-radius: 999px;
 }
+.panel__chip--claro { color: var(--gris); background: rgba(20, 54, 39, .07); }
 .punto-latido {
   width: 8px; height: 8px; border-radius: 50%; background: #34d399; position: relative; flex: none;
 }
@@ -514,7 +531,7 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
 }
 .migas a { color: #6ee7b7; font-weight: 700; }
 .migas a:hover { color: #fff; }
-.migas span { color: rgba(255, 255, 255, .4); }
+.migas span { color: rgba(255, 255, 255, .65); }
 
 /* ================================================================
    9. ENFOQUE · ETNOTECNOLOGÍA 5.0
@@ -680,6 +697,8 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   background: var(--crema);
 }
 .demo__head h3 { font-size: 17px; color: var(--bosque); margin: 0; }
+.demo__head .panel__live { color: #047857; }
+.demo__head .punto-latido { background: #047857; }
 .demo__log { flex: 1; padding: 24px 26px; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; max-height: 460px; }
 .msg { max-width: 88%; }
 .msg--user { align-self: flex-end; text-align: right; }
@@ -755,6 +774,11 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
 }
 .legal__lista .ico { color: var(--esmeralda-osc); margin-top: 3px; }
 .legal__lista b { color: var(--carbon); }
+
+/* Dentro de superficies oscuras la lista necesita colores claros */
+.demo__aside .legal__lista li { color: rgba(250, 246, 238, .82); }
+.demo__aside .legal__lista b { color: #6ee7b7; }
+.demo__aside .legal__lista .ico { color: #6ee7b7; }
 
 .aviso-cpli {
   background: linear-gradient(135deg, #2a0845 0%, #1b3b2b 100%);
@@ -880,7 +904,7 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
    14. PIE DE PÁGINA
    ================================================================ */
 .pie {
-  background: var(--bosque); color: rgba(250, 246, 238, .7);
+  background: var(--bosque); color: rgba(250, 246, 238, .82);
   padding: 70px 0 28px; border-top: 4px solid var(--esmeralda);
 }
 .pie__rejilla { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 42px; padding-bottom: 44px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
@@ -890,7 +914,7 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   margin-bottom: 20px;
 }
 .marca--pie .marca__txt b { color: var(--crema); }
-.marca--pie .marca__txt small { color: rgba(250, 246, 238, .5); }
+.marca--pie .marca__txt small { color: rgba(250, 246, 238, .68); }
 .pie__col--marca p { font-size: 13.5px; line-height: 1.6; margin: 20px 0; }
 .pie__distintivo {
   display: inline-flex; align-items: center; gap: 8px;
@@ -923,7 +947,7 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
 
 .pie__barra {
   display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap;
-  padding-top: 26px; font-size: 12.5px; color: rgba(250, 246, 238, .5);
+  padding-top: 26px; font-size: 12.5px; color: rgba(250, 246, 238, .68);
 }
 
 /* Botón subir */
