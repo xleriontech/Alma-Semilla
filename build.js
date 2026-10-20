@@ -12,6 +12,8 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
+const { validarHeaders } = require('./tools/validar-headers.cjs');
+
 const RAIZ = __dirname;
 const DESTINO = path.join(RAIZ, 'dist');
 
@@ -109,6 +111,23 @@ function contar(dir) {
 }
 
 function main() {
+  // --- Validación previa de los archivos de Cloudflare ---
+  // Si _headers o _redirects tienen un formato inválido, el despliegue
+  // falla en la API de Cloudflare. Se comprueba aquí para no llegar hasta allí.
+  const problemas = [];
+  for (const archivo of ['_headers', '_redirects']) {
+    const ruta = path.join(RAIZ, archivo);
+    if (!fs.existsSync(ruta)) continue;
+    problemas.push.apply(problemas, validarHeaders(fs.readFileSync(ruta, 'utf8'), archivo));
+  }
+  if (problemas.length) {
+    console.error('\nERROR: formato inválido en los archivos de Cloudflare:\n');
+    problemas.forEach((p) => console.error('  ' + p));
+    console.error('\nCloudflare no admite comentarios en _headers/_redirects:');
+    console.error('solo líneas de ruta ("/ruta") y pares "Cabecera: valor".\n');
+    process.exit(1);
+  }
+
   // Limpieza
   if (fs.existsSync(DESTINO)) fs.rmSync(DESTINO, { recursive: true, force: true });
   fs.mkdirSync(DESTINO, { recursive: true });
