@@ -112,6 +112,18 @@
   }
 
   /* -----------------------------------------------------------
+     4b. IMÁGENES CON FALLBACK
+     Si una imagen no carga, se retira para no dejar un hueco roto.
+     Se hace con listener (y no con onerror inline) para poder
+     mantener una CSP estricta sin 'unsafe-inline'.
+     ----------------------------------------------------------- */
+  $$('img').forEach(function (img) {
+    img.addEventListener('error', function () {
+      if (img.parentNode) img.parentNode.removeChild(img);
+    });
+  });
+
+  /* -----------------------------------------------------------
      5. FORMULARIOS
      ----------------------------------------------------------- */
   function validarCorreo(v) {

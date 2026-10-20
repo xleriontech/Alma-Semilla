@@ -22,11 +22,9 @@
 # --- HTML: siempre revalidado para publicar cambios de inmediato ---
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
-  X-Content-Type-Options: nosniff
 
 /
   Cache-Control: public, max-age=0, must-revalidate
-  X-Content-Type-Options: nosniff
 
 # --- Documentos PDF: se pueden cachear una hora ---
 /assets/docs/*

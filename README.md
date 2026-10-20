@@ -20,6 +20,9 @@ Alma&SemillaWebsite/
 ├── robots.txt              # Directivas para buscadores
 ├── sitemap.xml             # Mapa del sitio
 ├── build.js                # Genera dist/ para el despliegue
+├── wrangler.jsonc          # Configuración del Worker (Cloudflare)
+├── src/index.js            # Worker que sirve los assets estáticos
+├── package.json            # Scripts de build y deploy
 ├── assets/
 │   ├── css/styles.css      # Sistema de diseño completo
 │   ├── js/main.js          # Comportamiento compartido
@@ -42,20 +45,43 @@ python -m http.server 8000     # y abrir http://127.0.0.1:8000
 
 ## Despliegue en Cloudflare (Workers & Pages)
 
-El repositorio está listo para conectar al proyecto de Cloudflare:
+Hay dos rutas válidas. La que ves en el panel al conectar un repositorio de Git es la de
+**Workers**; para un sitio puramente estático, **Pages** es algo más simple.
 
-| Ajuste | Valor |
+### Ruta A — Workers (la que aparece en tu pantalla)
+
+El repositorio ya incluye `wrangler.jsonc` y `src/index.js`, así que solo hay que rellenar
+estos campos:
+
+| Campo | Valor |
 |---|---|
-| Nombre del proyecto | `alma-semilla` (o el que prefieras) |
-| Tipo | **Workers & Pages** → *Pages* → *Conectar a Git* |
+| Project name | `alma-semilla` |
+| **Build command** | `node build.js` |
+| Deploy command | `npx wrangler deploy` *(el valor por defecto, déjalo así)* |
+| Preview command | `npx wrangler preview` *(el valor por defecto, déjalo así)* |
+
+Pulsa **Deploy**. Cloudflare ejecutará `npm install`, luego `node build.js` (que genera `dist/`)
+y después `npx wrangler deploy`, que sube el Worker con los assets estáticos enlazados.
+
+> El `Build command` **no puede quedar vacío**: sin él, `dist/` no existe y el Worker sube
+> una carpeta de assets vacía.
+
+Si prefieres usar los scripts de `package.json` (que encadenan el build con el deploy):
+
+- **Build command**: `npm run build`
+- **Deploy command**: `npx wrangler deploy`
+
+### Ruta B — Pages (más simple, sin Worker)
+
+En el panel, en vez de *Workers*, elige la pestaña **Pages** → *Conectar a Git*:
+
+| Campo | Valor |
+|---|---|
+| Nombre del proyecto | `alma-semilla` |
 | Repositorio | `xleriontech/Alma-Semilla` |
 | Rama de producción | `main` |
 | **Comando de build** | `node build.js` |
 | **Directorio de salida** | `dist` |
-| Directorio raíz | *(vacío — la raíz del repositorio)* |
-
-`build.js` copia a `dist/` solo lo publicable (las 5 páginas, `404.html`, `assets/`, `_headers`,
-`robots.txt` y `sitemap.xml`) y deja fuera `site_examples/`, que es material de trabajo.
 
 ### Sin paso de build (alternativa)
 
@@ -68,10 +94,21 @@ Funciona igual, pero `site_examples/` quedaría publicado también.
 
 ### Después de conectar
 
-- La URL provisional será `https://alma-semilla.pages.dev`; añade el dominio definitivo en
-  *Custom domains*.
-- Las cabeceras de `_headers` (CSP, HSTS, caché) se aplican automáticamente.
+- La URL provisional será `https://alma-semilla.pages.dev` (o `https://alma-semilla.<subdominio>.workers.dev`
+  en el caso de Workers); añade el dominio definitivo en *Custom domains*.
+- Las cabeceras de `_headers` (CSP, HSTS, caché) se aplican automáticamente en ambas rutas.
 - Cada `push` a `main` dispara un redespliegue; Cloudflare solo reconstruye si cambian los archivos.
+
+### Probar el Worker en local
+
+```bash
+npm install
+npm run preview     # build + wrangler dev en http://127.0.0.1:8788
+```
+
+> En Windows, la carpeta del proyecto contiene un `&` en el nombre y eso rompe el shim
+> `node_modules/.bin`. Invoca wrangler directamente: `node node_modules/wrangler/bin/wrangler.js dev`.
+> En Linux (Cloudflare) no ocurre.
 
 ---
 
