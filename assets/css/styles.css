@@ -622,8 +622,6 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   /* align-items: start evita que la fila estire la columna del lienzo
      cuando el panel de detalle crece al seleccionar un nodo */
   align-items: start;
-  /* referencia de posicionamiento para la ficha flotante del nodo */
-  position: relative;
 }
 .tejido__lienzo { position: relative; height: 520px; }
 .tejido__lienzo canvas { width: 100%; height: 100%; display: block; position: absolute; inset: 0; }
@@ -636,10 +634,10 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   background: rgba(0, 0, 0, .28);
   border-left: 1px solid rgba(255, 255, 255, .1);
   padding: 28px 24px;
-  display: flex; flex-direction: column; gap: 18px;
-  /* La barra lateral se estira a toda la altura de la fila, aunque su
-     contenido sea corto: si no, el fondo oscuro cortaría en seco. */
-  align-self: stretch;
+  display: flex; flex-direction: column; gap: 16px;
+  /* Altura limitada a la del lienzo: la ficha hace scroll interno, asi
+     el grafo nunca se estira ni se tapa. */
+  align-self: stretch; max-height: 520px; overflow: hidden;
 }
 .tejido__filtros h3 { font-size: 15px; color: #fff; letter-spacing: .04em; text-transform: uppercase; font-family: var(--fuente-texto); font-weight: 800; }
 .filtro {
@@ -653,26 +651,34 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
 .filtro input { accent-color: var(--esmeralda); width: 16px; height: 16px; }
 .filtro__cont { margin-left: auto; font-family: var(--fuente-mono); font-size: 12px; color: rgba(250, 246, 238, .55); }
 .tejido__detalle {
-  /* Flota sobre el grafo: el lienzo mantiene siempre su altura y la
-     ficha no obliga a estirar la fila del grid. */
-  position: absolute; top: 20px; left: 20px; z-index: 4;
-  width: min(330px, calc(100% - 380px));
-  max-height: 460px; overflow-y: auto;
-  padding: 20px 22px; border-radius: var(--r);
-  background: rgba(5, 18, 13, .93);
-  border: 1px solid rgba(255, 255, 255, .15);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, .5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  font-size: 12.5px; color: rgba(250, 246, 238, .72); line-height: 1.55;
+  /* La ficha vive en la barra lateral: el grafo nunca queda tapado y el
+     usuario puede seguir seleccionando nodos sin estorbo. */
+  margin-top: auto; padding: 16px 18px; border-radius: var(--r-sm);
+  background: rgba(0, 0, 0, .3); border: 1px solid rgba(255, 255, 255, .1);
+  font-size: 12.5px; color: rgba(250, 246, 238, .8); line-height: 1.5;
+  flex: 1 1 auto; min-height: 0; overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(250, 246, 238, .22) transparent;
-  /* La ficha es un simple lector de datos: nunca debe interceptar
-     el clic sobre los nodos que hay debajo. */
-  pointer-events: none;
-  opacity: 0; transform: translateY(10px);
-  transition: opacity .3s ease, transform .3s cubic-bezier(.2, .7, .2, 1);
+  pointer-events: auto;
 }
+.tejido__detalle::-webkit-scrollbar { width: 5px; }
+.tejido__detalle::-webkit-scrollbar-track { background: transparent; }
+.tejido__detalle::-webkit-scrollbar-thumb {
+  background: rgba(250, 246, 238, .22); border-radius: 999px;
+}
+.tejido__detalle strong { display: block; font-size: 13.5px; line-height: 1.35; margin-bottom: 10px; }
+/* Un filo de color indica que hay un nodo seleccionado */
+.tejido__detalle.tiene-dato { border-left: 2px solid var(--esmeralda); padding-left: 16px; }
+/* Etiqueta y valor en dos columnas: la ficha cabe casi entera sin scroll */
+.tejido__detalle dl {
+  display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; align-items: baseline;
+}
+.tejido__detalle dt {
+  color: rgba(250, 246, 238, .45); font-size: 9.5px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .08em; white-space: nowrap;
+}
+.tejido__detalle dd { color: #6ee7b7; font-family: var(--fuente-mono); font-size: 11.5px; }
+.tejido__detalle p { margin-top: 12px; font-size: 12px; line-height: 1.5; color: rgba(250, 246, 238, .68); }
 .tejido__detalle.tiene-dato { opacity: 1; transform: none; }
 .tejido__detalle::-webkit-scrollbar { width: 5px; }
 .tejido__detalle::-webkit-scrollbar-track { background: transparent; }
@@ -1235,15 +1241,12 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
   .nav__links { gap: 18px; }
   .esencia__grid { gap: 50px; }
   .tejido { grid-template-columns: 1fr; }
-  .tejido__filtros { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .1); }
-  .tejido__lienzo { height: 440px; }
-  .tejido__detalle {
-    position: static; width: auto; max-height: none; overflow: visible;
-    background: rgba(0, 0, 0, .28); border: 1px solid rgba(255, 255, 255, .1);
-    box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
-    margin-top: 4px;
-    pointer-events: auto;
+  .tejido__filtros {
+    border-left: 0; border-top: 1px solid rgba(255, 255, 255, .1);
+    max-height: none; overflow: visible;
   }
+  .tejido__lienzo { height: 440px; }
+  .tejido__detalle { margin-top: 4px; max-height: none; overflow: visible; }
   .demo { grid-template-columns: 1fr; }
   .demo__aside { order: -1; }
   .legal { grid-template-columns: 1fr; }
