@@ -1,0 +1,78 @@
+{
+  "name": "Fundación Alma y Semilla — Etnotecnología y Saberes Ancestrales 5.0",
+  "short_name": "Alma y Semilla",
+  "description": "Entidad sin ánimo de lucro dedicada a la investigación, preservación y difusión de saberes ancestrales, ecológicos y médicos mediante tecnologías de la 4RI (IA, VR, IoT).",
+  "lang": "es-CO",
+  "dir": "ltr",
+  "id": "/",
+  "start_url": "/?fuente=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary",
+  "theme_color": "#143627",
+  "background_color": "#0b1d14",
+  "categories": ["education", "nonprofit", "science", "reference"],
+  "icons": [
+    {
+      "src": "/assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/img/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/img/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "El Tejido Digital (Repositorio Vivo)",
+      "short_name": "Repositorio",
+      "description": "Explora el grafo de saberes y consulta el asistente etnográfico.",
+      "url": "/repositorio.html",
+      "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Líneas de investigación",
+      "short_name": "Objeto Social",
+      "description": "Las cuatro líneas de investigación y acción de la Fundación.",
+      "url": "/objeto-social.html",
+      "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Transparencia y marco legal",
+      "short_name": "Transparencia",
+      "description": "Estatutos, política de datos y datos registrales.",
+      "url": "/transparencia.html",
+      "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Teje con nosotros",
+      "short_name": "Contacto",
+      "description": "Alianzas comunitarias, apoyo tecnológico, donaciones e investigación.",
+      "url": "/contacto.html",
+      "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

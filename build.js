@@ -63,14 +63,17 @@ const PAGINAS = [
   'repositorio.html',
   'transparencia.html',
   'contacto.html',
-  '404.html'
+  '404.html',
+  'offline.html'
 ];
 
 // Archivos sueltos en la raíz
 const ARCHIVOS = [
   '_headers',
   'robots.txt',
-  'sitemap.xml'
+  'sitemap.xml',
+  'manifest.webmanifest',
+  'sw.js'
 ];
 
 // Carpetas que se copian completas

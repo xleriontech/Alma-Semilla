@@ -131,11 +131,14 @@
     if (document.readyState === 'complete') {
       window.setTimeout(finalizar, 650);
     } else {
+      // El evento load puede retrasarse (o no llegar) si un recurso
+      // externo falla, por ejemplo sin conexión. No esperamos sin límite.
       window.addEventListener('load', () => window.setTimeout(finalizar, 250));
+      window.setTimeout(finalizar, 3500);
     }
 
     // Red de seguridad: el cargador nunca bloquea el sitio
-    window.setTimeout(finalizar, 8000);
+    window.setTimeout(finalizar, 5000);
   }
 
   iniciarCargador();
@@ -425,8 +428,70 @@
     btnSubir.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 
+
   /* -----------------------------------------------------------
-     12. AÑO EN EL PIE DE PÁGINA
+     12. PWA · REGISTRO DEL SERVICE WORKER
+     Solo en producción: en file:// no hay service worker y en
+     desarrollo estorba la caché del navegador.
+     ----------------------------------------------------------- */
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .then((registro) => {
+          // Pedir que la versión nueva se active de inmediato
+          registro.addEventListener('updatefound', () => {
+            const nuevo = registro.installing;
+            if (!nuevo) return;
+            nuevo.addEventListener('statechange', () => {
+              if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
+                document.documentElement.classList.add('hay-actualizacion');
+              }
+            });
+          });
+        })
+        .catch(() => { /* sin service worker el sitio sigue funcionando */ });
+    });
+  }
+
+  /* -----------------------------------------------------------
+     13. PWA · BOTÓN DE INSTALACIÓN
+     Solo aparece si el navegador ofrece instalarlo (Chrome, Edge,
+     Android). En iOS se muestra una instrucción breve.
+     ----------------------------------------------------------- */
+  const btnInstalar = $('#btn-instalar');
+  let promptInstalacion = null;
+
+  if (btnInstalar) {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      promptInstalacion = e;
+      btnInstalar.hidden = false;
+    });
+
+    btnInstalar.addEventListener('click', async () => {
+      if (promptInstalacion) {
+        promptInstalacion.prompt();
+        const eleccion = await promptInstalacion.userChoice;
+        if (eleccion && eleccion.outcome === 'accepted') {
+          btnInstalar.hidden = true;
+        }
+        promptInstalacion = null;
+        return;
+      }
+      // iOS no expone beforeinstallprompt: se explica el procedimiento
+      const ayuda = $('#ayuda-instalar');
+      if (ayuda) ayuda.hidden = false;
+      btnInstalar.hidden = true;
+    });
+
+    // Si ya está instalada, el botón no aporta nada
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      btnInstalar.hidden = true;
+    }
+  }
+
+  /* -----------------------------------------------------------
+     14. AÑO EN EL PIE DE PÁGINA
      ----------------------------------------------------------- */
   const anio = $('#anio');
   if (anio) anio.textContent = new Date().getFullYear();

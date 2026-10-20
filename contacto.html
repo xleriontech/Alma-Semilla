@@ -18,10 +18,18 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Alma y Semilla">
+<meta name="application-name" content="Alma y Semilla">
+<meta name="format-detection" content="telephone=no">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,600&family=Nunito:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=4eb63d48">
+<link rel="stylesheet" href="assets/css/styles.css?v=f9305ea4">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -475,6 +483,14 @@
           <button type="submit" class="btn btn--esmeralda btn--sm">Unirme</button>
         </form>
         <p class="pie__aviso" id="boletin-aviso" role="status" hidden></p>
+
+        <button class="btn btn--fantasma btn--sm pie__instalar" id="btn-instalar" hidden>
+          <svg class="ico ico--sm" aria-hidden="true"><use href="#i-download"/></svg>
+          Instalar la aplicación
+        </button>
+        <p class="pie__ayuda" id="ayuda-instalar" hidden>
+          En iPhone o iPad: pulsa <b>Compartir</b> y luego <b>Añadir a pantalla de inicio</b>.
+        </p>
       </div>
     </div>
 
@@ -490,7 +506,7 @@
 </button>
 
 
-<script src="assets/js/main.js?v=bbac3b19" defer></script>
+<script src="assets/js/main.js?v=c86cb6e7" defer></script>
 <script src="assets/js/tejido.js?v=86ef1ffa" defer></script>
 </body>
 </html>

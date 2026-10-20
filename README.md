@@ -262,7 +262,44 @@ La demo del repositorio es funcional pero opera sobre un corpus de ejemplo. Para
 
 ---
 
-### Accesibilidad: auditoría de contraste
+### Progressive Web App (PWA)
+
+El sitio es **instalable** y **funciona sin conexión**.
+
+### Qué incluye
+
+| Archivo | Para qué sirve |
+|---|---|
+| `manifest.webmanifest` | Nombre, icono, color de tema, modo `standalone` y 4 accesos directos (Repositorio, Objeto Social, Transparencia, Contacto) |
+| `sw.js` | Service worker: caché y modo sin conexión |
+| `offline.html` | Página de respaldo cuando no hay red |
+| `assets/img/icon-*.png` | Iconos 192, 512 y versiones *maskable* (zona segura del 58 %), más el `apple-touch-icon` de 180 |
+
+### Estrategia de caché
+
+- **Navegación (HTML)**: red primero → caché → `offline.html`. Así el sitio siempre está al día
+  cuando hay red, y sigue disponible cuando no.
+- **Assets con hash** (`?v=...`, en `/assets/`): caché primero. Son inmutables, no hace falta
+  volver a pedirlos.
+- **Recursos externos** (fuentes de Google, imágenes): red primero con respaldo en caché.
+
+### Instalar en el dispositivo
+
+- **Chrome / Edge (escritorio)**: aparece el icono de instalación en la barra de direcciones, o
+  usa el botón *Instalar la aplicación* del pie de página.
+- **Android (Chrome)**: menú *⋮* → *Añadir a pantalla de inicio*.
+- **iOS / iPadOS**: botón *Compartir* → *Añadir a pantalla de inicio*. El pie de página explica
+  el procedimiento cuando el navegador no expone la instalación automática.
+
+Una vez instalada, la aplicación se abre a pantalla completa, sin barra de navegador, y conserva
+el icono y el color de la Fundación.
+
+> La instalación automática solo se ofrece en `https` (o `localhost`). En Cloudflare el sitio ya
+> sirve por HTTPS, así que funciona.
+
+---
+
+## Accesibilidad: auditoría de contraste
 
 El sitio cumple el mínimo **WCAG AA**: 4,5:1 para texto normal y 3:1 para texto grande.
 
