@@ -15,6 +15,11 @@ Alma&SemillaWebsite/
 ├── repositorio.html        # El Tejido Digital (Repositorio Vivo · RAG)
 ├── transparencia.html      # Gobierno Corporativo y Marco Legal
 ├── contacto.html           # Contacto y Alianzas
+├── 404.html                # Página de error con la identidad visual
+├── _headers                # Cabeceras de seguridad y caché (Cloudflare Pages)
+├── robots.txt              # Directivas para buscadores
+├── sitemap.xml             # Mapa del sitio
+├── build.js                # Genera dist/ para el despliegue
 ├── assets/
 │   ├── css/styles.css      # Sistema de diseño completo
 │   ├── js/main.js          # Comportamiento compartido
@@ -22,15 +27,73 @@ Alma&SemillaWebsite/
 │   ├── img/logo.svg        # Logotipo
 │   ├── img/patron-tejido.svg
 │   └── docs/               # Estatutos, Política de Datos, Certificado (PDF)
-├── site_examples/          # Prototipos originales (sin cambios)
+├── site_examples/          # Prototipos originales (no se despliegan)
 └── README.md
 ```
 
-Sin build, sin framework, sin CDN de iconos. Se abre con doble clic o con cualquier servidor estático.
+Sin framework, sin dependencias de terceros, sin CDN de iconos. Para verlo localmente basta con
+abrir `index.html` o servir la carpeta:
 
 ```bash
 python -m http.server 8000     # y abrir http://127.0.0.1:8000
 ```
+
+---
+
+## Despliegue en Cloudflare (Workers & Pages)
+
+El repositorio está listo para conectar al proyecto de Cloudflare:
+
+| Ajuste | Valor |
+|---|---|
+| Nombre del proyecto | `alma-semilla` (o el que prefieras) |
+| Tipo | **Workers & Pages** → *Pages* → *Conectar a Git* |
+| Repositorio | `xleriontech/Alma-Semilla` |
+| Rama de producción | `main` |
+| **Comando de build** | `node build.js` |
+| **Directorio de salida** | `dist` |
+| Directorio raíz | *(vacío — la raíz del repositorio)* |
+
+`build.js` copia a `dist/` solo lo publicable (las 5 páginas, `404.html`, `assets/`, `_headers`,
+`robots.txt` y `sitemap.xml`) y deja fuera `site_examples/`, que es material de trabajo.
+
+### Sin paso de build (alternativa)
+
+Si prefieres no usar build, en Cloudflare Pages pon:
+
+- **Comando de build**: *(vacío)*
+- **Directorio de salida**: `/`
+
+Funciona igual, pero `site_examples/` quedaría publicado también.
+
+### Después de conectar
+
+- La URL provisional será `https://alma-semilla.pages.dev`; añade el dominio definitivo en
+  *Custom domains*.
+- Las cabeceras de `_headers` (CSP, HSTS, caché) se aplican automáticamente.
+- Cada `push` a `main` dispara un redespliegue; Cloudflare solo reconstruye si cambian los archivos.
+
+---
+
+## Actualizar el sitio
+
+```bash
+# 1. Editar los archivos
+# 2. Previsualizar
+python -m http.server 8000
+
+# 3. Publicar
+node build.js          # genera dist/ (opcional, solo para revisar)
+git add -A
+git commit -m "Descripción del cambio"
+git push
+```
+
+> **Importante**: el CSS y el JS se versionan por hash SHA-1 en la URL
+> (`styles.css?v=bcdaa1ea`) para que los navegadores no sirvan una versión antigua desde su
+> caché. `build.js` reescribe ese hash en cada compilación, así que basta con `node build.js`
+> y hacer push: no hay que editarlo a mano. Si previsualizas sin compilar y acabas de tocar
+> el CSS, fuerza la recarga con `Ctrl+F5`.
 
 ---
 

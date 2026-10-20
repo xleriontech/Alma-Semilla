@@ -10,9 +10,49 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const RAIZ = __dirname;
 const DESTINO = path.join(RAIZ, 'dist');
+
+// --- Versionado de assets por hash del contenido ---
+// Al construir, las URLs de CSS/JS se reescriben con el hash real del archivo.
+// Así, cualquier cambio en el CSS o el JS genera una URL nueva y ningún
+// navegador sirve una versión obsoleta desde su caché.
+const ASSETS_VERSIONADOS = [
+  'assets/css/styles.css',
+  'assets/js/main.js',
+  'assets/js/tejido.js'
+];
+
+function hashArchivo(relativo) {
+  const ruta = path.join(RAIZ, relativo);
+  if (!fs.existsSync(ruta)) return null;
+  return crypto.createHash('sha1')
+    .update(fs.readFileSync(ruta))
+    .digest('hex')
+    .slice(0, 8);
+}
+
+function versiones() {
+  const mapa = {};
+  for (const asset of ASSETS_VERSIONADOS) {
+    const h = hashArchivo(asset);
+    if (h) mapa[asset] = h;
+  }
+  return mapa;
+}
+
+function actualizarVersiones(html, mapa) {
+  let salida = html;
+  for (const asset of Object.keys(mapa)) {
+    const base = asset.split('/').pop();
+    // Sustituye cualquier ?v= existente por el hash vigente
+    const re = new RegExp('(' + base.replace(/\./g, '\\.') + ')\\?v=[a-z0-9]+', 'g');
+    salida = salida.replace(re, '$1?v=' + mapa[asset]);
+  }
+  return salida;
+}
 
 // Páginas que se publican
 const PAGINAS = [
@@ -43,6 +83,11 @@ function copiarArchivo(origen, destino) {
   fs.copyFileSync(origen, destino);
 }
 
+function copiarPagina(origen, destino, mapa) {
+  const html = fs.readFileSync(origen, 'utf8');
+  fs.writeFileSync(destino, actualizarVersiones(html, mapa), 'utf8');
+}
+
 function copiarCarpeta(origen, destino) {
   fs.mkdirSync(destino, { recursive: true });
   for (const entrada of fs.readdirSync(origen, { withFileTypes: true })) {
@@ -69,6 +114,7 @@ function main() {
   fs.mkdirSync(DESTINO, { recursive: true });
 
   let copiados = 0;
+  const mapa = versiones();
 
   for (const pagina of PAGINAS) {
     const origen = path.join(RAIZ, pagina);
@@ -76,7 +122,7 @@ function main() {
       console.warn('  ! falta ' + pagina + ' — se omite');
       continue;
     }
-    copiarArchivo(origen, path.join(DESTINO, pagina));
+    copiarPagina(origen, path.join(DESTINO, pagina), mapa);
     copiados++;
   }
 
@@ -98,6 +144,10 @@ function main() {
 
   const total = contar(DESTINO);
   console.log('Build completado: dist/ con ' + total + ' archivos (' + copiados + ' en la raíz).');
+  console.log('Versiones de assets:');
+  for (const asset of Object.keys(mapa)) {
+    console.log('  ' + asset + '?v=' + mapa[asset]);
+  }
   console.log('Despliegue en Cloudflare Pages → directorio de salida: dist');
 }
 
