@@ -90,7 +90,7 @@ function copiarArchivo(origen, destino) {
 
 function copiarPagina(origen, destino, mapa) {
   const html = fs.readFileSync(origen, 'utf8');
-  fs.writeFileSync(destino, actualizarVersiones(html, mapa), 'utf8');
+  fs.writeFileSync(destino, ajustarUrls(actualizarVersiones(html, mapa)), 'utf8');
 }
 
 function copiarCarpeta(origen, destino) {
@@ -111,6 +111,41 @@ function contar(dir) {
     else n++;
   }
   return n;
+}
+
+
+// ---------- Configuración del sitio ----------
+// El dominio definitivo se define en site.config.json o en la variable
+// de entorno SITE_URL. Al compilar, se reescriben las URLs absolutas
+// (Open Graph, canonical y sitemap) con el dominio configurado.
+const DOMINIO_POR_DEFECTO = 'https://almaysemilla.org';
+
+function leerConfig() {
+  const ruta = path.join(RAIZ, 'site.config.json');
+  let url = DOMINIO_POR_DEFECTO;
+  if (fs.existsSync(ruta)) {
+    try {
+      const cfg = JSON.parse(fs.readFileSync(ruta, 'utf8'));
+      if (cfg && cfg.url) url = cfg.url;
+    } catch (e) {
+      console.warn('  ! site.config.json no es valido, se usa ' + url);
+    }
+  }
+  if (process.env.SITE_URL) url = process.env.SITE_URL;
+  return url.replace(/\/+$/, '');
+}
+
+const DOMINIO = leerConfig();
+
+// Reescribe el dominio y vuelve absolutas las canonical
+function ajustarUrls(html) {
+  let salida = html.split(DOMINIO_POR_DEFECTO).join(DOMINIO);
+  // canonical relativa -> absoluta
+  salida = salida.replace(
+    /<link rel="canonical" href="([^"]+)">/g,
+    (m, href) => '<link rel="canonical" href="' + (href.startsWith('/') ? DOMINIO + href : href) + '">'
+  );
+  return salida;
 }
 
 function main() {
@@ -154,7 +189,13 @@ function main() {
       console.warn('  ! falta ' + archivo + ' — se omite');
       continue;
     }
-    copiarArchivo(origen, path.join(DESTINO, archivo));
+    if (archivo === 'sitemap.xml') {
+      // El sitemap exige URLs absolutas
+      const xml = fs.readFileSync(origen, 'utf8').replace(/<loc>\//g, '<loc>' + DOMINIO + '/');
+      fs.writeFileSync(path.join(DESTINO, archivo), xml, 'utf8');
+    } else {
+      copiarArchivo(origen, path.join(DESTINO, archivo));
+    }
     copiados++;
   }
 
@@ -171,6 +212,7 @@ function main() {
     console.log('  ' + asset + '?v=' + mapa[asset]);
   }
   console.log('Despliegue en Cloudflare Pages → directorio de salida: dist');
+  console.log('Dominio de las URLs absolutas: ' + DOMINIO);
 }
 
 main();

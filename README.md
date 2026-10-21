@@ -262,7 +262,49 @@ La demo del repositorio es funcional pero opera sobre un corpus de ejemplo. Para
 
 ---
 
-### Progressive Web App (PWA)
+### Vista previa al compartir el enlace (Open Graph)
+
+Cuando alguien comparte un enlace del sitio en WhatsApp, Slack, X, LinkedIn o Facebook, la
+mensajería muestra una **tarjeta con el logotipo, el nombre y la descripción** de la Fundación.
+
+### Qué se necesita
+
+- `assets/img/og-cover.jpg` — imagen de portada de **1200 × 630** (el tamaño estándar),
+  generada con el logo, el lema y la red de nodos sobre el fondo institucional.
+- Etiquetas `og:*` y `twitter:*` en el `<head>` de cada página, con título y descripción
+  propios de esa página.
+
+### Configurar el dominio
+
+Las vistas previas necesitan **URLs absolutas**. El dominio se define en un solo sitio:
+
+```json
+// site.config.json
+{
+  "url": "https://almaysemilla.org"
+}
+```
+
+Al compilar, `build.js` reescribe con ese dominio las URLs absolutas de Open Graph, las
+`canonical` y el `sitemap.xml`. También puedes fijarlo sin tocar el archivo:
+
+```bash
+SITE_URL=https://otro-dominio.com npm run build
+```
+
+**Cuando confirmes el dominio definitivo, cambia `url` en `site.config.json` y vuelve a
+desplegar.** Las vistas previas que se compartan antes de eso quedarán con el dominio
+anterior: los reproductores las guardan en caché, y conviene pedir su reindexación.
+
+### Comprobar el resultado
+
+- [OpenGraph debugger](https://www.opengraph.xyz/) o el depurador de Facebook
+- [Card validator de Twitter](https://cards-dev.twitter.com/validator)
+- Pegando la URL en un chat de WhatsApp o Telegram
+
+---
+
+## Progressive Web App (PWA)
 
 El sitio es **instalable** y **funciona sin conexión**.
 
