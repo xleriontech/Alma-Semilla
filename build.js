@@ -190,8 +190,11 @@ function main() {
       continue;
     }
     if (archivo === 'sitemap.xml') {
-      // El sitemap exige URLs absolutas
-      const xml = fs.readFileSync(origen, 'utf8').replace(/<loc>\//g, '<loc>' + DOMINIO + '/');
+      // El sitemap exige URLs absolutas: se admite tanto <loc>/ruta
+      // como <loc>https://dominio-anterior/ruta
+      let xml = fs.readFileSync(origen, 'utf8');
+      xml = xml.split(DOMINIO_POR_DEFECTO).join(DOMINIO);
+      xml = xml.replace(/<loc>\//g, '<loc>' + DOMINIO + '/');
       fs.writeFileSync(path.join(DESTINO, archivo), xml, 'utf8');
     } else {
       copiarArchivo(origen, path.join(DESTINO, archivo));
