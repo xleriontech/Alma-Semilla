@@ -281,9 +281,12 @@ Las vistas previas necesitan **URLs absolutas**. El dominio se define en un solo
 ```json
 // site.config.json
 {
-  "url": "https://almaysemilla.org"
+  "url": "https://alma-semilla.xlerionultimate.workers.dev"
 }
 ```
+
+> **Si más adelante se añade un dominio propio en Cloudflare**, cambia aquí `"url"` y vuelve a
+> desplegar. Se reescriben a la vez las URLs de Open Graph, las `canonical` y el `sitemap.xml`.
 
 Al compilar, `build.js` reescribe con ese dominio las URLs absolutas de Open Graph, las
 `canonical` y el `sitemap.xml`. También puedes fijarlo sin tocar el archivo:
