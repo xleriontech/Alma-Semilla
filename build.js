@@ -24,8 +24,20 @@ const DESTINO = path.join(RAIZ, 'dist');
 const ASSETS_VERSIONADOS = [
   'assets/css/styles.css',
   'assets/js/main.js',
-  'assets/js/tejido.js'
+  'assets/js/tejido.js',
+  'assets/img/og-cover.jpg'
 ];
+
+// Las fotos se versionan igualmente con ?v=: su nombre no lleva hash,
+// así que sin él el navegador y el service worker servirían la versión
+// anterior durante años después de actualizar una imagen.
+function fotosVersionadas() {
+  const dir = path.join(RAIZ, 'assets/img/fotos');
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir)
+    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+    .map((f) => 'assets/img/fotos/' + f);
+}
 
 function hashArchivo(relativo) {
   const ruta = path.join(RAIZ, relativo);
@@ -38,7 +50,7 @@ function hashArchivo(relativo) {
 
 function versiones() {
   const mapa = {};
-  for (const asset of ASSETS_VERSIONADOS) {
+  for (const asset of ASSETS_VERSIONADOS.concat(fotosVersionadas())) {
     const h = hashArchivo(asset);
     if (h) mapa[asset] = h;
   }
@@ -48,10 +60,17 @@ function versiones() {
 function actualizarVersiones(html, mapa) {
   let salida = html;
   for (const asset of Object.keys(mapa)) {
-    const base = asset.split('/').pop();
+    const base = asset.split('/').pop().replace(/\./g, '\\.');
     // Sustituye cualquier ?v= existente por el hash vigente
-    const re = new RegExp('(' + base.replace(/\./g, '\\.') + ')\\?v=[a-z0-9]+', 'g');
-    salida = salida.replace(re, '$1?v=' + mapa[asset]);
+    salida = salida.replace(
+      new RegExp('(' + base + ')\\?v=[a-z0-9]+', 'g'),
+      '$1?v=' + mapa[asset]
+    );
+    // Y donde no lo hubiera (por ejemplo en las fotos), se añade
+    salida = salida.replace(
+      new RegExp('(' + base + ')(?![?\\w])', 'g'),
+      '$1?v=' + mapa[asset]
+    );
   }
   return salida;
 }

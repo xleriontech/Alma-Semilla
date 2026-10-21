@@ -32,8 +32,9 @@ function validarHeaders(contenido, nombre) {
       return;
     }
 
-    // Dentro de un bloque: "Cabecera: valor"
     const sinEspacios = linea.trim();
+
+    // Dentro de un bloque: "Cabecera: valor"
     if (sinEspacios.indexOf(':') === -1) {
       errores.push('L' + n + ': se esperaba un par "Cabecera: valor" → ' + JSON.stringify(sinEspacios.slice(0, 60)));
       return;

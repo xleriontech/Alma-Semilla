@@ -460,9 +460,21 @@ h3 { font-size: clamp(20px, 2.1vw, 25px); }
 .esencia__grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 70px; align-items: center; }
 .esencia__visual { position: relative; }
 .foto {
+  position: relative;
   border-radius: var(--r-lg); overflow: hidden;
   background: linear-gradient(140deg, var(--arena), var(--hoja-cl));
   box-shadow: var(--sombra-m);
+}
+/* Si la foto no carga, el contenedor rueda su texto alternativo
+   en vez de quedar vacío (lo añade main.js al fallar la imagen) */
+.sin-imagen::after {
+  content: attr(data-fallo);
+  position: absolute; inset: auto 0 0 0;
+  padding: 44px 18px 15px;
+  font-size: 13px; line-height: 1.55; color: var(--crema);
+  background: linear-gradient(to top,
+    rgba(20, 54, 39, .96) 0, rgba(20, 54, 39, .96) 62%,
+    rgba(20, 54, 39, 0) 100%);
 }
 .foto--a { aspect-ratio: 4/5; }
 .foto--b { aspect-ratio: 3/4; position: absolute; right: -34px; bottom: -46px; width: 52%; border: 7px solid var(--crema); }

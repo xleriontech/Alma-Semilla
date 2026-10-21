@@ -298,14 +298,24 @@
 
   /* -----------------------------------------------------------
      8. IMÁGENES CON RESPALDO
-     Si una imagen no carga, se retira para no dejar un hueco roto.
+     Si una imagen no carga, el contenedor muestra su texto
+     alternativo en lugar de dejar un hueco roto en silencio.
      Se hace con listener (y no con onerror inline) para poder
-     mantener una CSP estricta sin 'unsafe-inline'.
+     mantener una CSP estricta sin 'unsafe-inline', y además se
+     revisa `complete` por si la imagen ya falló antes de que este
+     script se ejecutara (error perdido durante el parseo).
      ----------------------------------------------------------- */
+  function respaldarImagen(img) {
+    const cont = img.parentNode;
+    if (!cont || cont.classList.contains('sin-imagen')) return;
+    if (img.alt) cont.setAttribute('data-fallo', img.alt);
+    cont.classList.add('sin-imagen');
+    img.remove();
+  }
+
   $$('img').forEach((img) => {
-    img.addEventListener('error', () => {
-      if (img.parentNode) img.parentNode.removeChild(img);
-    });
+    img.addEventListener('error', () => respaldarImagen(img));
+    if (img.complete && img.naturalWidth === 0) respaldarImagen(img);
   });
 
   /* -----------------------------------------------------------

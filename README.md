@@ -229,8 +229,12 @@ La demo del repositorio es funcional pero opera sobre un corpus de ejemplo. Para
 
 ## Decisiones técnicas
 
-- **Versionado de assets por hash**: las URLs de CSS/JS llevan `?v=<hash sha1>`, de modo que un
-  despliegue nunca sirve una versión obsoleta desde la caché del navegador.
+- **Versionado de assets por hash**: las URLs de CSS/JS, las fotografías de `assets/img/fotos/` y
+  la portada `og-cover.jpg` llevan `?v=<hash sha1>`, de modo que un despliegue nunca sirve una
+  versión obsoleta desde la caché del navegador ni desde el service worker.
+- **Imágenes propias**: las fotografías se sirven desde el propio sitio (sin CDN externo) para
+  que la primera carga no dependa de la red de terceros. Si alguna falla, el `<figure>` conserva
+  su degradado y muestra el texto alternativo.
 - **Mejora progresiva**: si el JavaScript está desactivado, todo el contenido sigue visible (las
   animaciones de aparición solo se ocultan cuando hay JS activo, mediante la clase `.js`).
 - **Sin dependencias de iconos**: 34 iconos SVG en línea dentro de cada página.
@@ -255,10 +259,11 @@ La demo del repositorio es funcional pero opera sobre un corpus de ejemplo. Para
    (Formspree, API propia, etc.).
 6. **Corpus y telemetría** — los 14 registros son de ejemplo. Sustituirlos por los saberes validados
    por las comunidades guardianas, con su Acta de CPLI.
-7. **Fotografías** — apuntan a Unsplash. Descargar las imágenes reales de la fundación a
-   `assets/img/` (cada `<figure>` tiene un fondo degradado de respaldo).
-8. **Dominio** — las etiquetas `canonical` apuntan a `https://almaysemilla.org/`: ajustar al
-   dominio definitivo.
+7. **Fotografías** — hay dos fotos de prueba en `assets/img/fotos/` (origen Unsplash, pero ya
+   servidas desde el propio sitio). Sustituirlas por las imágenes reales de la fundación
+   conservando el nombre: el `?v=` del hash se recalcula en cada build.
+8. **Dominio** — las URLs absolutas (Open Graph, `canonical` y `sitemap.xml`) salen de
+   `site.config.json`. Al conectar un dominio propio, cambiar `"url"` y redesplegar.
 
 ---
 
