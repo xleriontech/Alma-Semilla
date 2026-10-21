@@ -6,6 +6,9 @@ pnpm-lock.yaml
 # Salida de build
 dist/
 
+# Documentos legales: no se versionan (se conservan fuera del repositorio)
+assets/docs/
+
 # Estado local de wrangler (cachés de miniflare, bundles de dev)
 .wrangler/
 

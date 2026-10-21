@@ -29,7 +29,7 @@ Alma&SemillaWebsite/
 │   ├── js/tejido.js        # Gráficos, grafo de conocimiento y asistente RAG
 │   ├── img/logo.svg        # Logotipo
 │   ├── img/patron-tejido.svg
-│   └── docs/               # Estatutos, Política de Datos, Certificado (PDF)
+│   └── img/fotos/          # Fotografías del sitio (versionadas con ?v=)
 ├── site_examples/          # Prototipos originales (no se despliegan)
 └── README.md
 ```
@@ -92,11 +92,12 @@ Si prefieres no usar build, en Cloudflare Pages pon:
 
 Funciona igual, pero `site_examples/` quedaría publicado también.
 
-### ⚠️ Importante: el repositorio es privado y la app de Cloudflare necesita acceso
+### ⚠️ Importante: si el repositorio vuelve a ponerse privado
 
-Cuando el repositorio pasa de público a privado, **GitHub revoca el acceso de las apps instaladas
-que solo lo tenían por ser público**. Si eso ocurre, los pushes dejan de disparar builds y el
-panel muestra el proyecto sin actividad.
+El repositorio es **público** y la app de Cloudflare lo ve sin más. Pero si algún día se vuelve
+a poner privado, ten en cuenta que **GitHub revoca el acceso de las apps instaladas que solo lo
+tenían por ser público**. Si eso ocurre, los pushes dejan de disparar builds y el panel muestra
+el proyecto sin actividad.
 
 **Solución (una sola vez):**
 
@@ -253,8 +254,9 @@ La demo del repositorio es funcional pero opera sobre un corpus de ejemplo. Para
    sustituirlo por la dirección real.
 3. **Redes sociales** — los iconos de LinkedIn, GitHub e Instagram apuntan a las plataformas
    genéricas: hay que enlazar las cuentas oficiales.
-4. **Documentos PDF** — `assets/docs/*.pdf` son **modelos de estructura** generados para que las
-   descargas funcionen. Deben reemplazarse por los documentos oficiales firmados.
+4. **Documentos legales** — no se versionan en el repositorio (`assets/docs/` está ignorado y el
+   historial está limpio). La página de transparencia los ofrece **bajo solicitud** por el canal
+   de contacto. Para publicarlos, subir los oficiales firmados a `assets/docs/` y enlazarlos.
 5. **Formularios** — validan y muestran confirmación, pero **no envían**. Conectar a un backend
    (Formspree, API propia, etc.).
 6. **Corpus y telemetría** — los 14 registros son de ejemplo. Sustituirlos por los saberes validados
@@ -396,4 +398,4 @@ Probado en Chromium real a 1440 / 820 / 390 / 320 px:
 - Asistente RAG: cita fuente, rechaza contenido sagrado para visitantes, responde con perfil de
   comunidad guardiana, y gestiona el caso sin coincidencias
 - Formulario de contacto: validación de campos obligatorios y confirmación de envío
-- Los 3 PDF de descarga responden 200 y son structurally válidos
+- La página de transparencia ofrece los documentos legales bajo solicitud (sin PDFs versionados)
